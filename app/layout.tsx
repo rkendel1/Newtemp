@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { createClient } from "@/utils/update/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,16 +17,21 @@ export const metadata: Metadata = {
   description: "The fastest way to build apps with Next.js and Update",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const client = await createClient();
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" disableTransitionOnChange>
-          <Header />
+          <Header user={user} />
           {children}
         </ThemeProvider>
       </body>

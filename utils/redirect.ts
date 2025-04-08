@@ -11,5 +11,12 @@ export function encodedRedirect(
   path: string,
   message: string,
 ) {
-  return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
+  // Check if the path already has query parameters
+  const hasQuery = path.includes('?');
+  
+  // If it has a query, use & to append the new parameter
+  // Otherwise, use ? to start the query string
+  const separator = hasQuery ? '&' : '?';
+  
+  return redirect(`${path}${separator}${type}=${encodeURIComponent(message)}`);
 }
