@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ProductWithPrices } from "@updatedev/js";
+import { ProductWithPrices, Subscription } from "@updatedev/js";
 import { Button } from "@/components/ui/button";
 import PricingCard from "@/components/pricing-card";
 import { cn } from "@/utils/styles";
@@ -9,9 +9,11 @@ import { cn } from "@/utils/styles";
 export default function PricingContent({
   products,
   currentProductId,
+  currentSubscription,
 }: {
   products: ProductWithPrices[];
   currentProductId: string | null;
+  currentSubscription?: Subscription | null;
 }) {
   const [interval, setInterval] = useState<"month" | "year" | "one-time">(
     "month"
@@ -60,6 +62,7 @@ export default function PricingContent({
             isCurrentPlan={
               currentProductId != null && product.id === currentProductId
             }
+            currentSubscription={currentSubscription}
           />
         ))}
       </div>

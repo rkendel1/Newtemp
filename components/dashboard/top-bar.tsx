@@ -8,7 +8,8 @@ import {
   Menu, 
   Github, 
   MessageSquare,
-  Bell
+  Bell,
+  CreditCard
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -20,19 +21,42 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/utils/update/client";
 import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 export function TopBar() {
   const [email, setEmail] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [planName, setPlanName] = useState<string | null>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
 
-  // Fetch user email on the client side
+  // Fetch user email and subscription info on the client side
   useEffect(() => {
-    const getUser = async () => {
+    const getUserData = async () => {
       const client = createClient();
       const { data } = await client.auth.getUser();
       setEmail(data.user?.email || null);
+      
+      // Get subscription data
+      try {
+        const { data: subscriptionData } = await client.billing.getSubscriptions();
+        if (subscriptionData.subscriptions && subscriptionData.subscriptions.length > 0) {
+          const subscription = subscriptionData.subscriptions[0];
+          setPlanName(subscription.product.name);
+          
+          if (subscription.cancel_at_period_end) {
+            setSubscriptionStatus("cancelling");
+          } else if (subscription.status === "active") {
+            setSubscriptionStatus("active");
+          } else {
+            setSubscriptionStatus(subscription.status);
+          }
+        }
+      } catch (error) {
+        console.error("Error loading subscription data:", error);
+      }
     };
-    getUser();
+    
+    getUserData();
   }, []);
 
   return (
@@ -52,7 +76,20 @@ export function TopBar() {
       <div className="flex-1"></div>
       
       {/* Right side actions */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
+        {/* Plan indicator */}
+        {planName && (
+          <Badge 
+            variant={subscriptionStatus === "active" ? "default" : 
+                    subscriptionStatus === "cancelling" ? "secondary" : "outline"}
+            className="px-2 py-0 flex items-center gap-1 hidden md:flex"
+          >
+            <CreditCard size={12} className="mr-1" />
+            {planName}
+            {subscriptionStatus === "cancelling" && " (Cancelling)"}
+          </Badge>
+        )}
+      
         {/* Notifications */}
         <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
           <Bell size={18} />
@@ -80,7 +117,15 @@ export function TopBar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{email || "User"}</DropdownMenuLabel>
+            <DropdownMenuLabel className="flex flex-col">
+              <span>{email || "User"}</span>
+              {planName && (
+                <span className="text-xs text-muted-foreground mt-1">
+                  Plan: {planName}
+                  {subscriptionStatus === "cancelling" && " (Cancelling)"}
+                </span>
+              )}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/protected/settings">Settings</Link>

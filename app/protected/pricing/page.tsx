@@ -95,6 +95,11 @@ export default async function PricingPage() {
       subscriptionData.subscriptions.length === 0
       ? null
       : subscriptionData.subscriptions[0].product.id;
+      
+  const currentSubscription = 
+    subscriptionData.subscriptions && subscriptionData.subscriptions.length > 0
+      ? subscriptionData.subscriptions[0]
+      : null;
 
   return (
     <>
@@ -108,6 +113,7 @@ export default async function PricingPage() {
       <PricingContent
         products={data.products}
         currentProductId={currentProductId}
+        currentSubscription={currentSubscription}
       />
     </>
   );
