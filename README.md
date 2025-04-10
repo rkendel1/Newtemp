@@ -7,7 +7,7 @@
 [![Stripe](https://img.shields.io/badge/Stripe-14.0.0-008CDD?style=for-the-badge&logo=stripe)](https://stripe.com)
 [![Update](https://img.shields.io/badge/Update-1.0.0-181818?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6IiBmaWxsPSIjMDAwIi8+PC9zdmc+)](https://update.dev)
 
-![Next.js SaaS Boilerplate Screenshot](public/landing.png)
+![Next.js SaaS Boilerplate Screenshot](public/headerimg.png)
 
 🚀 The ultimate Next.js 15 SaaS boilerplate for indie hackers and startups. Start charging customers immediately with built-in Stripe payments, Supabase auth, Update.dev billing, and premium content gating. Everything you need to launch your monetized application in hours, not weeks.
 
