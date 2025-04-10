@@ -19,7 +19,7 @@
 
 ## 🎮 Demo
 
-### Live demo: [Next.js Boilerplate](https://demo.update.dev)
+### Live demo: [Coming Soon](https://update.dev)
 
 <div align="center">
   <table>
