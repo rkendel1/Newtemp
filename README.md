@@ -119,7 +119,7 @@ cp .env.local.example .env.local
 NEXT_PUBLIC_UPDATE_PUBLIC_KEY=your_update_public_key
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-NEXT_PUBLIC_SITE_URL=http://localhost:4000
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 7. Run the development server:

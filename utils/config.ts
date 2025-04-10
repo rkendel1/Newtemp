@@ -1,7 +1,7 @@
 // Application URLs and endpoints
 export const APP_CONFIG = {
   // Site URLs
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:4000',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   
   // API URLs
   catApi: {
