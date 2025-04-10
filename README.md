@@ -1,222 +1,202 @@
-# Update.dev Boilerplate
+# 🚀 Update.dev Boilerplate - Next.js 15 SaaS Starter Kit
 
-🚀🎉📚 Modern SaaS Boilerplate and Starter for Next.js 15 with App Router, Supabase, and Stripe Integration ⚡️
+[![Next.js](https://img.shields.io/badge/Next.js-15.0.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![Supabase](https://img.shields.io/badge/Supabase-2.39.3-181818?style=for-the-badge&logo=supabase)](https://supabase.com)
+[![Stripe](https://img.shields.io/badge/Stripe-14.0.0-008CDD?style=for-the-badge&logo=stripe)](https://stripe.com)
+[![Update](https://img.shields.io/badge/Update-1.0.0-181818?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6IiBmaWxsPSIjMDAwIi8+PC9zdmc+)](https://update.dev)
 
-A complete starter kit for building production-ready SaaS applications with authentication, dashboard layout, and payment infrastructure ready to go. Built with developer experience first: Next.js 15 + TypeScript + ESLint + Tailwind CSS 4 + Shadcn UI + Supabase Auth + Stripe + Server Actions + Error Boundaries + Loading States + Custom Error Messages + Centralized Configuration + Mobile-Responsive Design + SEO Optimization + Production-Ready Deployment ✨
+A production-ready SaaS boilerplate built with Next.js 15, featuring authentication, subscription management, and a beautiful dashboard. Perfect for launching your next SaaS product quickly and efficiently.
 
-## ✨ Demo
+## ✨ Key Features
 
-[Live Demo](https://update.dev)
+### 🚀 Modern Tech Stack
+- **Next.js 15** with App Router for blazing-fast performance
+- **TypeScript** for type-safe development
+- **Tailwind CSS 4** for beautiful, responsive design
+- **Supabase** for authentication and database
+- **Stripe** for subscription management
+- **Update** for unified billing, authentication, and entitlement management
 
-## 🚀 Features
+### 🔐 Authentication & Security
+- Email/Password authentication
+- Google OAuth integration
+- Secure session management
+- Protected routes and middleware
+- Email confirmation flow
+- Update-powered auth flow management
 
-- ⚡ **Next.js 15** with App Router support
-  - [Next.js Documentation](https://nextjs.org/docs)
-  - [App Router Documentation](https://nextjs.org/docs/app)
-  - Server-side rendering and static site generation
-  - API routes and server actions
-  - Built-in image optimization
-  - Automatic code splitting
-  - TypeScript support out of the box
+### 💳 Subscription Management
+- Pre-configured subscription plans
+- Stripe integration
+- Customer portal
+- Secure payment processing
+- Update-powered entitlement management
 
-- 🔐 **Supabase Auth** with multiple auth methods
-  - [Supabase Auth Documentation](https://supabase.com/auth)
-  - Email/Password authentication with security best practices
-  - Magic link (passwordless) authentication
-  - OAuth providers (Google)
-  - Comprehensive email confirmation flow
-
-- 💳 **Stripe Integration** for payments and subscriptions
-  - [Stripe Documentation](https://stripe.com/docs)
-  - Pre-configured subscription plans
-  - Secure payment processing
-  - Webhook support for subscription events
-  - Customer portal for subscription management
-
-- 🎨 **Tailwind CSS 4** for styling with a beautiful UI
-  - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-  - Consistent design system with custom variables
-  - Dark mode support with system preference detection
-  - Responsive layouts for all screen sizes
-
-- 🔤 **TypeScript** for type safety throughout the codebase
-  - [TypeScript Documentation](https://www.typescriptlang.org/docs)
-  - Strict type checking
-  - Advanced type inference
-  - Type-safe API calls
-  - Enhanced IDE support
-
-- 🧩 **Shadcn UI** components library with accessibility features
-  - [Shadcn UI Documentation](https://ui.shadcn.com/docs)
-  - Pre-built, accessible components
-  - Customizable design system
-  - Dark mode support
-  - Responsive components
-
-- 📱 **Responsive Design** with mobile-first approach
-- 🌙 **Dark Mode** support with theme persistence
-- 🔄 **Server Actions** for form handling and server-side operations
-- 🧭 **Dashboard Layout** with sidebar and profile management
-- 🔒 **Protected Routes** with middleware authentication
-- 📧 **Email Templates** for authentication flows
-- 🌐 **SEO Ready** with configurable metadata
-- 🚀 **Production Ready** deployment configuration
-
-## 📋 Requirements
-
-- Node.js 20+ and npm
-- Supabase account (free tier works for development)
-- Stripe account (for payment integration)
-- Git for version control
+### 🎨 UI/UX Features
+- Responsive dashboard layout
+- Mobile-first design
+- Loading states and spinners
+- Error boundaries
+- Custom error messages
 
 ## 🚀 Getting Started
 
-Run the following command on your local environment:
+### Prerequisites
+- Node.js 18.17 or later
+- npm or yarn
+- Supabase account
+- Stripe account
+- Update.dev account
 
+### Installation
+
+1. Create accounts on required services:
+   - [Update.dev](https://update.dev)
+   - [Supabase](https://supabase.com)
+   - [Stripe](https://stripe.com)
+
+2. Clone the repository:
 ```bash
-git clone https://github.com/updatedotdev/boiler.git my-saas-app
-cd my-saas-app
-npm install
+git clone https://github.com/update-dev/boilerplate.git
+cd boilerplate
 ```
 
-Copy the `.env.local.example` file to `.env.local` and update the environment variables:
+3. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
+4. Set up environment variables:
 ```bash
 cp .env.local.example .env.local
 ```
 
-Then, you can run the project locally in development mode with live reload:
+5. Configure Update.dev:
+   - Go to [Update Dashboard](https://update.dev/dashboard)
+   - Create an entitlement (e.g., "pro" for premium features)
+   - Create a product that matches the entitlement (e.g., "Pro Plan" for $10/month)
+   - Copy your Update public key
 
-```bash
-npm run dev
-```
+6. Update the environment variables in `.env.local` with your credentials:
+```env
+# Update Configuration
+NEXT_PUBLIC_UPDATE_PUBLIC_KEY=your_update_public_key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
-Open [http://localhost:4000](http://localhost:4000) with your browser to see your project.
-
-## 🔧 Environment Variables
-
-To run this project, you need to set up the following environment variables in your `.env.local` file:
-
-```
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-# Application URLs
-NEXT_PUBLIC_SITE_URL=http://localhost:4000
-
-# Update Configuration
-NEXT_PUBLIC_UPDATE_PUBLIC_KEY=your_update_public_key
-
-# Stripe Configuration (for payment processing)
+# Stripe Configuration
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 ```
 
-For production deployments, make sure to set the `NEXT_PUBLIC_SITE_URL` to your production URL.
+7. Run the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+## 🔑 Entitlement Management
+
+This boilerplate uses Update for entitlement management. Here's how it works:
+
+1. **Creating Entitlements**:
+   - Go to [Update Dashboard](https://update.dev/dashboard) > Entitlements
+   - Create entitlements for your features (e.g., "premium", "team", "enterprise")
+   - Each entitlement should match a product in your Stripe configuration
+
+2. **Using Entitlements in Code**:
+```typescript
+// Example of checking entitlements
+const client = await createClient();
+const { data, error } = await client.entitlements.check("premium");
+
+if (error) {
+  // Handle error
+  console.error("Error checking entitlement:", error);
+  return;
+}
+
+if (data.hasAccess) {
+  // User has access to premium features
+  // Render premium content or enable features
+} else {
+  // User does not have access
+  // Show upgrade prompt or disable features
+}
+```
+
+3. **Checking Subscription Status**:
+```typescript
+// Example of checking subscription status
+const { data: subscriptionData } = await client.billing.getSubscriptions();
+const isPremiumUser = subscriptionData.subscriptions?.[0]?.status === "active";
+
+if (isPremiumUser) {
+  // User has an active subscription
+  // Enable premium features
+}
+```
+
+4. **Product-Entitlement Mapping**:
+   - Ensure your Stripe products match the entitlements you create
+   - For example:
+     - "Pro Plan" ($10/month) → "premium" entitlement
+     - "Team Plan" ($20/month) → "team" entitlement
+     - "Enterprise Plan" ($50/month) → "enterprise" entitlement
+
+## 📚 Documentation
+
+For detailed documentation, visit:
+- [Update Documentation](https://update.dev/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Stripe Documentation](https://stripe.com/docs)
+- [Next.js Documentation](https://nextjs.org/docs)
 
 ## 🧩 Project Structure
 
 ```
 .
-├── app                             # Next.js App Router
-│   ├── (auth)                      # Authentication routes
-│   │   ├── auth                    # Auth callback handling
-│   │   ├── email-confirmation      # Email confirmation page
-│   │   ├── sign-in                 # Sign in/up page
-│   │   └── sign-up                 # Redirect to sign-in with signup mode
-│   ├── protected                   # Protected routes (dashboard)
-│   │   ├── layout.tsx              # Dashboard layout with sidebar
-│   │   ├── page.tsx                # Main dashboard page
-│   │   ├── settings                # User settings
-│   │   ├── billing                 # Subscription management
-│   │   └── ...                     # Other dashboard routes
-│   ├── api                         # API routes
-│   │   └── webhook                 # Webhook handlers
-│   ├── pricing                     # Pricing page
-│   ├── actions.ts                  # Server actions
-│   └── page.tsx                    # Home page
-├── components                      # React components
-│   ├── dashboard                   # Dashboard components
-│   │   ├── sidebar.tsx             # Dashboard sidebar
-│   │   └── top-bar.tsx             # Dashboard top navigation
-│   ├── ui                          # UI components (shadcn)
-│   ├── auth-submit-button.tsx      # Auth form submit button
-│   ├── form-message.tsx            # Form error/success messages
-│   ├── google-sign-in-button.tsx   # Google authentication button
-│   ├── update-logo.tsx             # Logo component
-│   └── header.tsx                  # Main site header
-├── public                          # Static assets
-├── utils                           # Utility functions
-│   ├── redirect.ts                 # Redirect utilities
-│   ├── stripe                      # Stripe utilities
-│   └── update                      # Supabase client utilities
-├── middleware.ts                   # Next.js middleware for auth checks
-├── .env.local                      # Environment variables
-└── next.config.js                  # Next.js configuration
-```
-
-## 🎨 Customization Guide
-
-### Styling
-
-1. **Theme Colors**: Update the color variables in `app/globals.css`
-2. **Typography**: Modify font settings in `app/layout.tsx`
-3. **Component Styling**: Customize shadcn UI components in `components/ui`
-
-### Layout Customization
-
-1. **Header**: Modify `components/header.tsx` for the main navigation
-2. **Dashboard**: Update `components/dashboard/sidebar.tsx` and `top-bar.tsx`
-3. **Home Page**: Edit `app/page.tsx` for the landing page design
-
-## 🚀 Deployment
-
-### Vercel Deployment
-
-1. Push your code to GitHub
-2. Import your repository in Vercel
-3. Configure environment variables
-4. Deploy
-
-### Other Platforms
-
-This project can be deployed to any platform that supports Next.js:
-
-- Netlify
-- AWS Amplify
-- Self-hosted servers
-
-For production deployment:
-
-```bash
-npm run build
-npm run start
+├── app/                             # Next.js App Router
+│   ├── (auth)/                      # Authentication routes
+│   ├── protected/                   # Protected dashboard routes
+│   ├── pricing/                     # Pricing page
+│   └── page.tsx                     # Home page
+├── components/                      # React components
+│   ├── dashboard/                   # Dashboard components
+│   ├── ui/                          # UI components
+│   └── ...                          # Other components
+└── utils/                           # Utility functions
 ```
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for details.
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📚 Resources and References
+## 📞 Support
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Supabase Documentation](https://supabase.io/docs)
-- [Stripe Documentation](https://stripe.com/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Shadcn UI Documentation](https://ui.shadcn.com)
-- [Update.dev Documentation](https://update.dev/docs)
+- [Discord Community](https://discord.gg/update-dev)
+- [GitHub Issues](https://github.com/update-dev/boilerplate/issues)
+- [Documentation](https://update.dev/docs)
+
+## 🔗 Links
+
+- [Website](https://update.dev)
+- [GitHub](https://github.com/update-dev/boilerplate)
+- [YouTube Tutorials](https://youtube.com/@update-dev)
+- [Documentation](https://update.dev/docs)
 
 ---
 
