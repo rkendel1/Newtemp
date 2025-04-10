@@ -1,10 +1,8 @@
-# Payment Ready SaaS Boilerplate
+# Update.dev Boilerplate
 
-🚀 Modern SaaS Boilerplate with Next.js, Supabase, and Stripe Integration ⚡️
+🚀 Modern SaaS Boilerplate with Next.js 15+, Supabase, and Stripe Integration ⚡️
 
 A complete starter kit for building production-ready SaaS applications with authentication, dashboard layout, and payment infrastructure ready to go. Built with developer experience in mind: Next.js with App Router, TypeScript, Tailwind CSS, Supabase Auth, and more.
-
-![SaaS Boilerplate Banner](https://github.com/yourusername/boiler/raw/main/public/boilerplate-banner.png)
 
 ## ✨ Demo
 
@@ -14,24 +12,28 @@ Live demo: [Coming Soon](#)
 
 Developer experience first, with a production-ready codebase:
 
-- ⚡ **Next.js 14** with App Router support
-- 🔐 **Supabase Auth** with multiple auth methods
+- ⚡ **Next.js 15** with App Router support [@https://nextjs.org/]
+- 🔐 **Supabase Auth** with multiple auth methods [@https://supabase.com/auth]
   - Email/Password authentication with security best practices
   - Magic link (passwordless) authentication
   - OAuth providers (Google)
   - Comprehensive email confirmation flow
   - Proper error handling for all authentication scenarios
-- 💰 **Stripe Integration** ready for subscription payments
+- 💰 **Stripe Integration** ready for subscription payments [@https://stripe.com/docs]
   - Pre-configured subscription plans
   - Secure payment processing
   - Webhook support for subscription events
   - Customer portal for subscription management
-- 🎨 **Tailwind CSS** for styling with a beautiful UI
+- 🎨 **Tailwind CSS 4** for styling with a beautiful UI [@https://tailwindcss.com/]
   - Consistent design system with custom variables
   - Dark mode support with system preference detection
   - Responsive layouts for all screen sizes
-- 🔤 **TypeScript** for type safety throughout the codebase
-- 🧩 **Shadcn UI** components library with accessibility features
+- 🔤 **TypeScript** for type safety throughout the codebase [@https://www.typescriptlang.org/]
+- 📏 **ESLint** for code quality [@https://eslint.org/]
+  - Next.js Core Web Vitals configuration
+  - TypeScript support
+  - React Hooks rules
+- 🧩 **Shadcn UI** components library with accessibility features [@https://ui.shadcn.com/]
 - 📱 **Responsive Design** with mobile-first approach
 - 🌙 **Dark Mode** support with theme persistence
 - 🔄 **Server Actions** for form handling and server-side operations
@@ -43,7 +45,7 @@ Developer experience first, with a production-ready codebase:
 
 ## 📋 Requirements
 
-- Node.js 18+ and npm
+- Node.js 20+ and npm
 - Supabase account (free tier works for development)
 - Stripe account (for payment integration)
 - Git for version control
@@ -53,7 +55,7 @@ Developer experience first, with a production-ready codebase:
 Run the following command on your local environment:
 
 ```bash
-git clone https://github.com/yourusername/boiler.git my-saas-app
+git clone https://github.com/updatedotdev/boiler.git my-saas-app
 cd my-saas-app
 npm install
 ```
@@ -84,7 +86,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 # Application URLs
 NEXT_PUBLIC_SITE_URL=http://localhost:4000
 
-# Update Configuration (if using Update)
+# Update Configuration
 NEXT_PUBLIC_UPDATE_PUBLIC_KEY=your_update_public_key
 
 # Stripe Configuration (for payment processing)
@@ -94,81 +96,6 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 ```
 
 For production deployments, make sure to set the `NEXT_PUBLIC_SITE_URL` to your production URL.
-
-## 🔒 Setting Up Supabase Authentication
-
-### Creating a Supabase Project
-
-1. Create a Supabase account at [supabase.com](https://supabase.com)
-2. Create a new project and note down your project's URL and anon key
-3. Set up your database schema (SQL migrations are included in this boilerplate)
-
-### Configuring Authentication
-
-1. In your Supabase dashboard, navigate to Authentication → Settings
-2. Configure the Site URL to match your `NEXT_PUBLIC_SITE_URL`
-3. Set up redirect URLs for OAuth providers
-4. Configure email templates for authentication flows
-
-### Setting Up Email Authentication
-
-1. In the Supabase dashboard, go to Authentication → Email Templates
-2. Customize the email templates to match your brand
-3. Test the email flow in development environment
-
-### Enabling Google Sign-In
-
-To enable Google Sign-In:
-
-1. Go to your Supabase dashboard
-2. Navigate to Authentication → Providers
-3. Enable Google provider
-4. Create OAuth credentials in Google Cloud Console:
-   - Go to https://console.cloud.google.com/
-   - Create a new project (or use an existing one)
-   - Navigate to APIs & Services → Credentials
-   - Configure the OAuth consent screen
-   - Create OAuth client ID credentials (Web application type)
-   - Add authorized JavaScript origins and redirect URIs
-5. Copy the Client ID and Client Secret to your Supabase configuration
-
-### Additional Auth Providers
-
-This boilerplate can be extended to support additional OAuth providers:
-
-1. Enable the desired provider in Supabase Authentication settings
-2. Update the sign-in UI to include the new provider
-3. Add the necessary server actions for the authentication flow
-
-## 📐 Architecture Overview
-
-This boilerplate follows modern architectural patterns for a scalable SaaS application:
-
-### Frontend Architecture
-
-- **App Router**: Using Next.js 14 App Router for efficient routing and data fetching
-- **Server Components**: Leveraging React Server Components for better performance
-- **Client Components**: Using "use client" directive for interactive UI elements
-- **Server Actions**: Implementing form submissions and data mutations securely
-
-### Backend Architecture
-
-- **Supabase**: Primary backend service for authentication and database
-- **API Routes**: Next.js API routes for custom server-side logic
-- **Webhooks**: Endpoints for handling external service events (e.g., Stripe)
-
-### Authentication Flow
-
-- **Sign Up**: Email/password registration with email verification
-- **Sign In**: Multiple authentication methods with proper session management
-- **Protected Routes**: Middleware for route protection and redirection
-- **Session Management**: Secure handling of user sessions and tokens
-
-### Database Structure
-
-- **Users**: Managed by Supabase Auth
-- **Subscriptions**: Linked to Stripe for payment tracking
-- **Products/Services**: Your application-specific data models
 
 ## 🧩 Project Structure
 
@@ -211,80 +138,6 @@ This boilerplate follows modern architectural patterns for a scalable SaaS appli
 └── next.config.js                  # Next.js configuration
 ```
 
-## 🔄 Authentication Flow In Detail
-
-This boilerplate includes a sophisticated authentication system with multiple flows:
-
-### Email/Password Registration Flow
-
-1. User submits the sign-up form with email and password
-2. Server validates the input and checks for existing accounts
-3. Supabase creates a new user and sends a confirmation email
-4. User receives the email and clicks the confirmation link
-5. Auth callback route processes the confirmation
-6. User is redirected to the dashboard or sign-in page
-
-### Sign-In Flow
-
-1. User submits the sign-in form with credentials
-2. Server authenticates with Supabase
-3. On success, a session is created and the user is redirected to the dashboard
-4. On failure, appropriate error messages are displayed
-
-### OAuth (Google) Flow
-
-1. User clicks the "Continue with Google" button
-2. Supabase initiates the OAuth flow
-3. User authenticates with Google
-4. OAuth callback processes the authentication
-5. User is redirected to the dashboard
-
-### Password Reset Flow
-
-1. User requests a password reset from the sign-in page
-2. Supabase sends a password reset email
-3. User clicks the reset link
-4. User sets a new password
-5. User is redirected to sign in with the new password
-
-### Authentication Security
-
-The authentication system implements several security best practices:
-
-- Secure password hashing via Supabase
-- JWT tokens for session management
-- CSRF protection
-- Rate limiting for auth attempts
-- Automatic session refresh
-- Secure cookie handling
-
-## 💰 Stripe Integration
-
-### Setting Up Stripe
-
-1. Create a Stripe account at [stripe.com](https://stripe.com)
-2. Get your API keys from the Stripe Dashboard
-3. Update your environment variables with Stripe keys
-4. Configure your subscription products and prices in the Stripe Dashboard
-
-### Subscription Management
-
-The boilerplate includes components for:
-
-- Displaying subscription plans
-- Processing subscription payments
-- Managing subscription status
-- Handling subscription cancellations and upgrades
-
-### Webhook Integration
-
-To handle Stripe events properly:
-
-1. Install the Stripe CLI for local testing
-2. Forward webhooks to your local environment during development
-3. Configure webhook endpoints in your Stripe Dashboard for production
-4. Implement webhook handlers in the `/api/webhook` route
-
 ## 🎨 Customization Guide
 
 ### Styling
@@ -298,21 +151,6 @@ To handle Stripe events properly:
 1. **Header**: Modify `components/header.tsx` for the main navigation
 2. **Dashboard**: Update `components/dashboard/sidebar.tsx` and `top-bar.tsx`
 3. **Home Page**: Edit `app/page.tsx` for the landing page design
-
-### Adding New Features
-
-1. **New Pages**: Create new files in the `app` directory
-2. **API Routes**: Add new API endpoints in `app/api`
-3. **Dashboard Sections**: Add new sections in `app/protected`
-
-## 📱 Responsive Design
-
-The boilerplate is fully responsive with:
-
-- Mobile-first approach
-- Adaptive layouts for different screen sizes
-- Mobile navigation menu
-- Touch-friendly UI components
 
 ## 🚀 Deployment
 
@@ -338,34 +176,6 @@ npm run build
 npm run start
 ```
 
-## 🧪 Security Best Practices
-
-This boilerplate follows security best practices:
-
-- All sensitive operations occur on the server via Server Actions
-- Environment variables are properly handled
-- Authentication state is securely managed
-- Protected routes prevent unauthorized access
-- Form inputs are validated on both client and server
-- CSRF protection for forms
-- HTTP-only cookies for session management
-- Content Security Policy headers
-
-## 🔍 SEO Optimization
-
-- Metadata configuration in page layouts
-- Semantic HTML structure
-- Proper heading hierarchy
-- OpenGraph tags for social sharing
-
-## 📊 Analytics Integration
-
-The boilerplate can be easily extended with:
-
-- Google Analytics
-- Plausible Analytics
-- Custom event tracking
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -387,9 +197,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Stripe Documentation](https://stripe.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Shadcn UI Documentation](https://ui.shadcn.com)
+- [Update.dev Documentation](https://update.dev/docs)
 
 ---
 
-Made with ❤️ by [Your Name/Organization]
+Made with ❤️ by [Update.dev](https://update.dev)
 
-Looking for custom features or support? Contact us at [your-email@example.com]
+Looking for custom features or support? Contact us at [support@update.dev](mailto:support@update.dev)
