@@ -1,8 +1,6 @@
 # Next.js Payment-Ready SaaS Template - Complete Monetization Boilerplate
 
-🚀 Launch your SaaS faster with this production-ready Next.js 15 monetization template. Built for developers who need a complete payment system, subscription management, and user authentication out of the box.
-
-⚡️ Everything you need to start charging customers: Stripe integration, Supabase auth, Update.dev billing and auth wrapper, premium content gating, and beautiful Tailwind UI components. Perfect for indie hackers and startups building monetized applications.
+![Next.js SaaS Boilerplate Screenshot](public/landing.png)
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.0.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
@@ -11,9 +9,13 @@
 [![Stripe](https://img.shields.io/badge/Stripe-14.0.0-008CDD?style=for-the-badge&logo=stripe)](https://stripe.com)
 [![Update](https://img.shields.io/badge/Update-1.0.0-181818?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6IiBmaWxsPSIjMDAwIi8+PC9zdmc+)](https://update.dev)
 
-🚀⚡️📈 Production-ready Next.js 15 boilerplate for building monetizable SaaS applications. Built with developer experience in mind: Next.js 15 + TypeScript + Tailwind CSS + Supabase + Update.dev + Stripe + ESLint + Prettier + PostCSS ✨
+🚀 The ultimate Next.js 15 SaaS boilerplate for indie hackers and startups. Start charging customers immediately with built-in Stripe payments, Supabase auth, Update.dev billing, and premium content gating. Everything you need to launch your monetized application in hours, not weeks.
 
-A comprehensive starter kit for developers looking to build and monetize their SaaS applications quickly. This boilerplate includes everything you need to get started with payments, authentication, and premium content management.
+⚡️ Built with developer experience in mind: Next.js 15 + TypeScript + Tailwind CSS + Supabase + Update.dev + Stripe + ESLint + Prettier ✨
+
+🚀 Launch your SaaS faster with this production-ready Next.js 15 monetization template. Built for developers who need a complete payment system, subscription management, and user authentication out of the box.
+
+⚡️ Everything you need to start charging customers: Stripe integration, Supabase auth, Update.dev billing and auth wrapper, premium content gating, and beautiful Tailwind UI components. Perfect for indie hackers and startups building monetized applications.
 
 ## ✨ Key Features
 
@@ -65,7 +67,7 @@ A comprehensive starter kit for developers looking to build and monetize their S
 
 2. Clone the repository:
 ```bash
-git clone https://github.com/update-dev/boilerplate.git
+git clone https://github.com/wyattm14/launch-saas-stripe-nextjs-supabase-update.git
 cd boilerplate
 ```
 
@@ -91,16 +93,9 @@ cp .env.local.example .env.local
 ```env
 # Update Configuration
 NEXT_PUBLIC_UPDATE_PUBLIC_KEY=your_update_public_key
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-
-# Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Stripe Configuration
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+NEXT_PUBLIC_SITE_URL=http://localhost:4000
 ```
 
 7. Run the development server:
@@ -109,55 +104,6 @@ npm run dev
 # or
 yarn dev
 ```
-
-## 🔑 Entitlement Management
-
-This boilerplate uses Update for entitlement management. Here's how it works:
-
-1. **Creating Entitlements**:
-   - Go to [Update Dashboard](https://update.dev/dashboard) > Entitlements
-   - Create entitlements for your features (e.g., "premium", "team", "enterprise")
-   - Each entitlement should match a product in your Stripe configuration
-
-2. **Using Entitlements in Code**:
-```typescript
-// Example of checking entitlements
-const client = await createClient();
-const { data, error } = await client.entitlements.check("premium");
-
-if (error) {
-  // Handle error
-  console.error("Error checking entitlement:", error);
-  return;
-}
-
-if (data.hasAccess) {
-  // User has access to premium features
-  // Render premium content or enable features
-} else {
-  // User does not have access
-  // Show upgrade prompt or disable features
-}
-```
-
-3. **Checking Subscription Status**:
-```typescript
-// Example of checking subscription status
-const { data: subscriptionData } = await client.billing.getSubscriptions();
-const isPremiumUser = subscriptionData.subscriptions?.[0]?.status === "active";
-
-if (isPremiumUser) {
-  // User has an active subscription
-  // Enable premium features
-}
-```
-
-4. **Product-Entitlement Mapping**:
-   - Ensure your Stripe products match the entitlements you create
-   - For example:
-     - "Pro Plan" ($10/month) → "premium" entitlement
-     - "Team Plan" ($20/month) → "team" entitlement
-     - "Enterprise Plan" ($50/month) → "enterprise" entitlement
 
 ## 📚 Documentation
 
@@ -172,35 +118,65 @@ For detailed documentation, visit:
 ```
 .
 ├── app/                             # Next.js App Router
-│   ├── (auth)/                      # Authentication routes
-│   ├── protected/                   # Protected dashboard routes
-│   ├── pricing/                     # Pricing page
-│   └── page.tsx                     # Home page
-├── components/                      # React components
-│   ├── dashboard/                   # Dashboard components
-│   ├── ui/                          # UI components
-│   └── ...                          # Other components
-└── utils/                           # Utility functions
+│   ├── (auth)/                     # Authentication routes
+│   ├── api/                        # API routes
+│   │   ├── generator/              # Cat API integration
+│   │   └── webhook/                # Stripe webhook handler
+│   ├── protected/                  # Protected dashboard routes
+│   │   ├── paid-content/          # Premium content page
+│   │   ├── pricing/               # Pricing page
+│   │   └── subscription/          # Subscription management
+│   ├── pricing/                    # Public pricing page
+│   ├── actions.ts                  # Server actions
+│   ├── error.tsx                   # Error boundary
+│   ├── globals.css                 # Global styles
+│   ├── layout.tsx                  # Root layout
+│   └── page.tsx                    # Home page
+├── components/                     # React components
+│   ├── dashboard/                  # Dashboard components
+│   ├── ui/                         # UI components
+│   ├── auth-submit-button.tsx      # Authentication button
+│   ├── error-boundary.tsx          # Error boundary component
+│   ├── error-message.tsx           # Error message component
+│   ├── form-message.tsx            # Form message component
+│   ├── free-plan-card.tsx          # Free plan card
+│   ├── google-sign-in-button.tsx   # Google sign-in button
+│   ├── header.tsx                  # Header component
+│   ├── pricing-card.tsx            # Pricing card component
+│   ├── pricing-content.tsx         # Pricing content
+│   ├── protected-sidebar.tsx       # Protected sidebar
+│   └── subscription-actions.tsx    # Subscription actions
+├── utils/                          # Utility functions
+│   ├── update/                     # Update client utilities
+│   ├── config.ts                   # App configuration
+│   ├── errors.ts                   # Error handling
+│   ├── redirect.ts                 # Redirect utilities
+│   └── styles.ts                   # Style utilities
+├── .env.example                    # Environment variables example
+├── .env.local                      # Local environment variables
+├── .eslint.config.mjs              # ESLint configuration
+├── .gitignore                      # Git ignore file
+├── middleware.ts                    # Next.js middleware
+├── next.config.ts                  # Next.js configuration
+├── package.json                    # Project dependencies
+├── postcss.config.mjs              # PostCSS configuration
+└── tsconfig.json                   # TypeScript configuration
 ```
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for details.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Everyone is welcome to contribute. Open an issue if you have any questions or find a bug.
 
 ## 📞 Support
 
-- [Discord Community](https://discord.gg/update-dev)
-- [GitHub Issues](https://github.com/update-dev/boilerplate/issues)
+- [Discord Community](https://discord.com/invite/Guege5tXFK)
+- [GitHub Issues](https://github.com/wyattm14/launch-saas-stripe-nextjs-supabase-update/issues)
 - [Documentation](https://update.dev/docs)
 
 ## 🔗 Links
 
 - [Website](https://update.dev)
-- [GitHub](https://github.com/update-dev/boilerplate)
+- [GitHub](https://github.com/update-dev/js)
 - [YouTube Tutorials](https://youtube.com/@update-dev)
 - [Documentation](https://update.dev/docs)
 
