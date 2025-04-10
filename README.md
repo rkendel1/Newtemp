@@ -1,45 +1,64 @@
 # Update.dev Boilerplate
 
-🚀 Modern SaaS Boilerplate with Next.js 15+, Supabase, and Stripe Integration ⚡️
+🚀🎉📚 Modern SaaS Boilerplate and Starter for Next.js 15 with App Router, Supabase, and Stripe Integration ⚡️
 
-A complete starter kit for building production-ready SaaS applications with authentication, dashboard layout, and payment infrastructure ready to go. Built with developer experience in mind: Next.js with App Router, TypeScript, Tailwind CSS, Supabase Auth, and more.
+A complete starter kit for building production-ready SaaS applications with authentication, dashboard layout, and payment infrastructure ready to go. Built with developer experience first: Next.js 15 + TypeScript + ESLint + Tailwind CSS 4 + Shadcn UI + Supabase Auth + Stripe + Server Actions + Error Boundaries + Loading States + Custom Error Messages + Centralized Configuration + Mobile-Responsive Design + SEO Optimization + Production-Ready Deployment ✨
 
 ## ✨ Demo
 
-Live demo: [Coming Soon](#)
+[Live Demo](https://update.dev)
 
-## 🔑 Features
+## 🚀 Features
 
-Developer experience first, with a production-ready codebase:
+- ⚡ **Next.js 15** with App Router support
+  - [Next.js Documentation](https://nextjs.org/docs)
+  - [App Router Documentation](https://nextjs.org/docs/app)
+  - Server-side rendering and static site generation
+  - API routes and server actions
+  - Built-in image optimization
+  - Automatic code splitting
+  - TypeScript support out of the box
 
-- ⚡ **Next.js 15** with App Router support [@https://nextjs.org/]
-- 🔐 **Supabase Auth** with multiple auth methods [@https://supabase.com/auth]
+- 🔐 **Supabase Auth** with multiple auth methods
+  - [Supabase Auth Documentation](https://supabase.com/auth)
   - Email/Password authentication with security best practices
   - Magic link (passwordless) authentication
   - OAuth providers (Google)
   - Comprehensive email confirmation flow
-  - Proper error handling for all authentication scenarios
-- 💰 **Stripe Integration** ready for subscription payments [@https://stripe.com/docs]
+
+- 💳 **Stripe Integration** for payments and subscriptions
+  - [Stripe Documentation](https://stripe.com/docs)
   - Pre-configured subscription plans
   - Secure payment processing
   - Webhook support for subscription events
   - Customer portal for subscription management
-- 🎨 **Tailwind CSS 4** for styling with a beautiful UI [@https://tailwindcss.com/]
+
+- 🎨 **Tailwind CSS 4** for styling with a beautiful UI
+  - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
   - Consistent design system with custom variables
   - Dark mode support with system preference detection
   - Responsive layouts for all screen sizes
-- 🔤 **TypeScript** for type safety throughout the codebase [@https://www.typescriptlang.org/]
-- 📏 **ESLint** for code quality [@https://eslint.org/]
-  - Next.js Core Web Vitals configuration
-  - TypeScript support
-  - React Hooks rules
-- 🧩 **Shadcn UI** components library with accessibility features [@https://ui.shadcn.com/]
+
+- 🔤 **TypeScript** for type safety throughout the codebase
+  - [TypeScript Documentation](https://www.typescriptlang.org/docs)
+  - Strict type checking
+  - Advanced type inference
+  - Type-safe API calls
+  - Enhanced IDE support
+
+- 🧩 **Shadcn UI** components library with accessibility features
+  - [Shadcn UI Documentation](https://ui.shadcn.com/docs)
+  - Pre-built, accessible components
+  - Customizable design system
+  - Dark mode support
+  - Responsive components
+
 - 📱 **Responsive Design** with mobile-first approach
 - 🌙 **Dark Mode** support with theme persistence
 - 🔄 **Server Actions** for form handling and server-side operations
 - 🧭 **Dashboard Layout** with sidebar and profile management
-- 🔐 **Protected Routes** with authentication checks and redirects
-- 📤 **Form Validation** with custom error handling
+- 🔒 **Protected Routes** with middleware authentication
+- 📧 **Email Templates** for authentication flows
 - 🌐 **SEO Ready** with configurable metadata
 - 🚀 **Production Ready** deployment configuration
 
