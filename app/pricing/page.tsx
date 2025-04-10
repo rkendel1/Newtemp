@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Check, Info } from "lucide-react";
 
-export default function PricingPage() {
+export default async function PricingPage() {
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 py-16 bg-gradient-to-b from-background to-background/80">
       <div className="w-full max-w-5xl mx-auto">
@@ -37,7 +38,7 @@ export default function PricingPage() {
           <PricingCard 
             title="Starter"
             price="$0"
-            description="Perfect for side projects and experiments"
+            description="Perfect for side projects and experimentss"
             features={[
               "Up to 100 users",
               "Basic authentication",

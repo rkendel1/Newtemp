@@ -56,26 +56,22 @@ function SidebarLink({
   isDisabled: boolean;
 }) {
   return (
-    <>
-      <Link
-        href={href}
-        onClick={e => {
-          if (isDisabled) {
-            e.preventDefault();
-            return;
-          }
-        }}
-        className={cn(
-          "p-2 py-3 rounded-md text-sm text-gray-500 hover:text-foreground transition-colors",
-          isActive &&
-            "bg-accent text-foreground font-medium hover:text-foreground",
-          isDisabled && "text-gray-600 cursor-not-allowed hover:text-gray-700"
-        )}
-      >
-        <div className="flex items-center gap-2">
-          <div className="leading-none">{label}</div>
-        </div>
-      </Link>
-    </>
+    <Link
+      href={href}
+      onClick={e => {
+        if (isDisabled) {
+          e.preventDefault();
+          return;
+        }
+      }}
+      className={cn(
+        "p-2 py-3 rounded-md text-sm text-gray-500 hover:text-foreground transition-colors",
+        isActive &&
+          "bg-accent text-foreground font-medium hover:text-foreground",
+        isDisabled && "text-gray-600 cursor-not-allowed hover:text-gray-700"
+      )}
+    >
+      {label}
+    </Link>
   );
 }

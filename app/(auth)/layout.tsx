@@ -5,5 +5,9 @@ export default function UnauthenticatedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <Content>{children}</Content>;
+  return (
+    <div className="min-h-screen bg-background">
+      <Content>{children}</Content>
+    </div>
+  );
 }

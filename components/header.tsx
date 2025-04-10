@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Github, MessageSquare } from "lucide-react";
+import { Github, MessageSquare, PlayCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { User } from "@supabase/supabase-js";
+import { APP_CONFIG } from "@/utils/config";
 
 interface HeaderProps {
   user: User | null;
@@ -25,9 +26,9 @@ export default function Header({ user }: HeaderProps) {
         <div className="flex items-center gap-12">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-              <div className="w-3 h-3 bg-white rounded-sm"></div>
-            </div>
+            <span className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
+              <span className="w-3 h-3 bg-white rounded-sm"></span>
+            </span>
             <span className="font-bold text-xl">SampleApp</span>
           </Link>
           
@@ -39,18 +40,30 @@ export default function Header({ user }: HeaderProps) {
         
         {/* Right side: Navigation */}
         <nav className="flex items-center gap-4">
+          {/* Watch Demo */}
           <Button variant="outline" size="sm" className="gap-2" asChild>
-            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer">
+            <a href={APP_CONFIG.externalLinks.youtubeDemo} target="_blank" rel="noopener noreferrer">
+              <PlayCircle size={16} />
+              <span className="hidden sm:inline">Watch Demo</span>
+            </a>
+          </Button>
+          
+          {/* Discord */}
+          <Button variant="outline" size="sm" className="gap-2" asChild>
+            <a href={APP_CONFIG.externalLinks.discord} target="_blank" rel="noopener noreferrer">
               <MessageSquare size={16} />
               <span className="hidden sm:inline">Join Discord</span>
             </a>
           </Button>
+          
+          {/* GitHub */}
           <Button variant="outline" size="sm" className="gap-2" asChild>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href={APP_CONFIG.externalLinks.github} target="_blank" rel="noopener noreferrer">
               <Github size={16} />
               <span className="hidden sm:inline">GitHub</span>
             </a>
           </Button>
+          
           {user == null ? (
             <Button size="sm" asChild>
               <Link href="/sign-in">Sign in</Link>

@@ -19,15 +19,17 @@ export default function AuthPageSignOutButton() {
   }
 
   return (
-    <Button onClick={signOut} disabled={isSigningOut}>
-      <div className="flex items-center">
-        <Spinner
-          variant="primary"
-          isLoading={isSigningOut}
-          className="mr-[8px]"
-        />
-        {isSigningOut ? "Signing Out..." : "Sign Out"}
-      </div>
+    <Button 
+      onClick={signOut} 
+      disabled={isSigningOut}
+      className="flex items-center"
+    >
+      <Spinner
+        variant="primary"
+        isLoading={isSigningOut}
+        className="mr-[8px]"
+      />
+      {isSigningOut ? "Signing Out..." : "Sign Out"}
     </Button>
   );
 }

@@ -57,8 +57,18 @@ export default function EmailConfirmationPage({
     setIsSubmitting(true);
     setSubmitError(null);
     setSubmitSuccess(null);
+    
+    const emailValue = formData.get("email");
+    
+    // Validate email
+    if (!emailValue || typeof emailValue !== "string" || !emailValue.trim()) {
+      setSubmitError("Please provide a valid email address");
+      setIsSubmitting(false);
+      return;
+    }
+    
     try {
-      await resendConfirmationEmail(formData.get("email") as string);
+      await resendConfirmationEmail(emailValue.trim());
     } catch (error) {
       console.error("Failed to resend email:", error);
       setSubmitError("Failed to resend email. Please try again later.");
@@ -99,15 +109,15 @@ export default function EmailConfirmationPage({
           <h1 className="text-3xl font-bold mb-2">Check your email</h1>
           <p className="text-center text-muted-foreground">
             {isExistingAccount ?
-              "Your account exists but hasn't been confirmed yet. Enter your email to receive a confirmation link." :
-              "We've sent a confirmation link to your email. If you can't find it, you can request another one."}
+              "Your account exists but hasn&apos;t been confirmed yet. Enter your email to receive a confirmation link." :
+              "We&apos;ve sent a confirmation link to your email. If you can&apos;t find it, you can request another one."}
           </p>
         </div>
       )}
 
       {submitSuccess && (
-        <div className="mb-6 p-3 bg-green-50 text-green-800 border border-green-200 rounded-md flex items-start gap-2">
-          <CheckCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+        <div className="mb-6 p-3 bg-green-50 text-green-800 border border-green-200 rounded-md flex items-center gap-2">
+          <CheckCircle className="h-5 w-5 flex-shrink-0" />
           <p className="text-sm">{submitSuccess}</p>
         </div>
       )}
@@ -126,8 +136,8 @@ export default function EmailConfirmationPage({
           </p>
           
           {submitError && (
-            <div className="bg-destructive/10 text-destructive p-3 rounded-md flex items-start gap-2">
-              <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
+            <div className="bg-destructive/10 text-destructive p-3 rounded-md flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 flex-shrink-0" />
               <p className="text-sm">{submitError}</p>
             </div>
           )}
@@ -165,11 +175,9 @@ export default function EmailConfirmationPage({
         </div>
       </div>
       
-      <div className="flex justify-center mt-4">
-        <Link href="/sign-in" className="text-sm text-primary hover:underline">
-          Return to sign in
-        </Link>
-      </div>
+      <Link href="/sign-in" className="block text-center text-sm text-primary hover:underline mt-4">
+        Return to sign in
+      </Link>
     </div>
   );
 } 

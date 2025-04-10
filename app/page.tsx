@@ -10,12 +10,12 @@ export default function Home() {
           {/* Tech Stack Badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-4">
             {["Next.js", "Stripe", "Supabase", "Update"].map((tech) => (
-              <div 
+              <span 
                 key={tech} 
                 className="px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium"
               >
                 {tech}
-              </div>
+              </span>
             ))}
           </div>
           
@@ -40,9 +40,11 @@ export default function Home() {
                 <ArrowRight size={18} />
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="gap-2 h-12 px-6">
-              <Play size={18} className="fill-current" />
-              Watch demo
+            <Button size="lg" variant="outline" className="gap-2 h-12 px-6" asChild>
+              <a href="https://www.youtube.com/watch?v=XJo3nl4gvQY" target="_blank" rel="noopener noreferrer">
+                <Play size={18} className="fill-current" />
+                Watch demo
+              </a>
             </Button>
           </div>
         </div>
@@ -68,7 +70,7 @@ export default function Home() {
           <h2 className="text-xl font-medium mb-8">Trusted by developers worldwide</h2>
           <div className="flex justify-center items-center gap-12 opacity-70 flex-wrap">
             {["Company 1", "Company 2", "Company 3", "Company 4"].map((company) => (
-              <div key={company} className="text-lg font-semibold">{company}</div>
+              <span key={company} className="text-lg font-semibold">{company}</span>
             ))}
           </div>
         </div>
@@ -120,13 +122,13 @@ export default function Home() {
           </div>
           
           {/* Sample Pricing Note */}
-          <div className="bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-10 flex items-start gap-3 max-w-3xl mx-auto">
-            <Info size={20} className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="text-sm text-blue-800 dark:text-blue-300 font-medium text-left">
+          <div className="bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-10 flex items-center gap-3 max-w-3xl mx-auto">
+            <Info size={20} className="text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <div className="text-sm">
+              <strong className="block text-blue-800 dark:text-blue-300 font-medium text-left">
                 Sample Pricing Configuration
-              </p>
-              <p className="text-sm text-blue-700 dark:text-blue-400 mt-1 text-left">
+              </strong>
+              <span className="text-blue-700 dark:text-blue-400 mt-1 text-left block">
                 This is sample pricing. To configure your own plans and pricing, go to the{" "}
                 <a 
                   href="https://update.dev/dashboard" 
@@ -136,7 +138,7 @@ export default function Home() {
                 >
                   Billing section in the Update dashboard
                 </a>.
-              </p>
+              </span>
             </div>
           </div>
           
@@ -238,8 +240,11 @@ export default function Home() {
                 <ArrowRight size={18} />
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="gap-2 h-12 px-6">
-              Schedule a demo
+            <Button size="lg" variant="outline" className="gap-2 h-12 px-6" asChild>
+              <a href="https://www.youtube.com/watch?v=XJo3nl4gvQY" target="_blank" rel="noopener noreferrer">
+                <Play size={18} className="fill-current" />
+                Watch demo
+              </a>
             </Button>
           </div>
         </div>
@@ -252,9 +257,9 @@ export default function Home() {
 function FeatureCard({ title, description }: { title: string; description: string }) {
   return (
     <div className="border rounded-xl p-6 bg-card hover:shadow-md transition-shadow">
-      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-        <div className="w-6 h-6 bg-primary rounded-md"></div>
-      </div>
+      <span className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+        <span className="w-6 h-6 bg-primary rounded-md"></span>
+      </span>
       <h3 className="text-xl font-medium mb-2">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
     </div>
@@ -280,10 +285,8 @@ function TestimonialCard({ quote, author, role, rating }: {
         ))}
       </div>
       <p className="italic mb-6">&quot;{quote}&quot;</p>
-      <div>
-        <p className="font-medium">{author}</p>
-        <p className="text-sm text-muted-foreground">{role}</p>
-      </div>
+      <p className="font-medium">{author}</p>
+      <p className="text-sm text-muted-foreground">{role}</p>
     </div>
   );
 }
@@ -309,15 +312,15 @@ function PricingCard({
   return (
     <div className={`border rounded-xl p-8 ${highlighted ? "border-primary ring-2 ring-primary/20 shadow-lg" : ""} bg-card relative`}>
       {highlighted && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm font-medium py-1 px-4 rounded-full">
+        <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm font-medium py-1 px-4 rounded-full">
           Most Popular
-        </div>
+        </span>
       )}
       <h3 className="text-xl font-bold mb-2">{title}</h3>
-      <div className="flex items-end mb-4">
+      <p className="mb-4">
         <span className="text-3xl font-bold">{price}</span>
         <span className="text-muted-foreground ml-1">{period}</span>
-      </div>
+      </p>
       <p className="text-muted-foreground mb-6">{description}</p>
       <Button 
         variant={highlighted ? "default" : "outline"} 
@@ -330,8 +333,8 @@ function PricingCard({
       </Button>
       <div className="space-y-3">
         {features.map((feature, index) => (
-          <div key={index} className="flex items-start">
-            <Check size={16} className="text-primary mr-3 mt-1 flex-shrink-0" />
+          <div key={index} className="flex items-center">
+            <Check size={16} className="text-primary mr-3 flex-shrink-0" />
             <span>{feature}</span>
           </div>
         ))}

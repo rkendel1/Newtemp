@@ -1,4 +1,5 @@
 import { use } from 'react';
+import { cn } from '@/utils/styles';
 
 export type Message =
   | { success: string }
@@ -14,21 +15,22 @@ export function FormMessage({ message }: { message: Message | Promise<Message> }
   // If no message or undefined/null, don't render anything
   if (!resolvedMessage) return null;
   
-  return (
-    <div className="flex flex-col gap-2 w-full max-w-md text-sm">
-      {resolvedMessage && 'success' in resolvedMessage && (
-        <div className="text-foreground border-l-2 border-foreground px-4">
-          {resolvedMessage.success}
-        </div>
-      )}
-      {resolvedMessage && 'error' in resolvedMessage && (
-        <div className="text-destructive-foreground border-l-2 border-destructive-foreground px-4">
-          {resolvedMessage.error}
-        </div>
-      )}
-      {resolvedMessage && 'message' in resolvedMessage && (
-        <div className="text-foreground border-l-2 px-4">{resolvedMessage.message}</div>
-      )}
-    </div>
-  );
+  // Determine the message text and style based on the type
+  let messageText = '';
+  let className = 'text-sm border-l-2 px-4 w-full max-w-md';
+  
+  if ('success' in resolvedMessage) {
+    messageText = resolvedMessage.success;
+    className = cn(className, 'text-foreground border-foreground');
+  } else if ('error' in resolvedMessage) {
+    messageText = resolvedMessage.error;
+    className = cn(className, 'text-destructive-foreground border-destructive-foreground');
+  } else if ('message' in resolvedMessage) {
+    messageText = resolvedMessage.message;
+    className = cn(className, 'text-foreground');
+  } else {
+    return null;
+  }
+  
+  return <p className={className}>{messageText}</p>;
 }

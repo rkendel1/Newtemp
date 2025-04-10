@@ -1,24 +1,22 @@
 import { signInAction, signUpAction } from "@/app/actions";
 import AuthSubmitButton from "@/components/auth-submit-button";
 import GoogleSignInButton from "@/components/google-sign-in-button";
-import { FormMessage, Message } from "@/components/form-message";
+import { Message } from "@/components/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import ErrorMessage from "@/components/error-message";
 
 export default async function SignIn(props: {
   searchParams: Promise<Message>;
 }) {
   const searchParams = await props.searchParams;
   
-  // For debugging - log the search params to see what's coming in
-  console.log("SearchParams in sign-in page:", searchParams);
-  
   // Fix to properly handle the mode parameter, ensuring it doesn't include any additional query strings
   let isSignUp = false;
-  if (searchParams && "mode" in searchParams) {
+  if (searchParams && typeof searchParams === 'object' && "mode" in searchParams) {
     // Extract just the "signup" part if the mode parameter contains additional text
-    const modeValue = String(searchParams.mode);
+    const modeValue = searchParams.mode ? String(searchParams.mode) : '';
     isSignUp = modeValue === "signup" || modeValue.startsWith("signup?") || modeValue.startsWith("signup&");
   }
   
@@ -29,14 +27,21 @@ export default async function SignIn(props: {
   const toggleAction = isSignUp ? "Sign in" : "Sign up";
   const buttonText = isSignUp ? "Sign up" : "Sign in";
 
-  // Check for email already exists error with more flexible matching
-  const hasExistingEmailError = searchParams && 
-    "error" in searchParams && 
-    typeof searchParams.error === 'string' && (
-      searchParams.error.toLowerCase().includes("already exist") || 
-      searchParams.error.toLowerCase().includes("email already") ||
-      searchParams.error.toLowerCase().includes("already registered")
-    );
+  // Get error code and message from searchParams with type safety
+  let errorCode: string | null = null;
+  let errorMessage: string | null = null;
+  
+  if (searchParams && typeof searchParams === 'object') {
+    // Handle code parameter
+    if ('code' in searchParams && searchParams.code !== undefined) {
+      errorCode = String(searchParams.code);
+    }
+    
+    // Handle message parameter
+    if ('message' in searchParams && searchParams.message !== undefined) {
+      errorMessage = String(searchParams.message);
+    }
+  }
 
   return (
     <div className="flex-1 flex flex-col w-full max-w-md mx-auto mt-16 px-8 sm:px-0">
@@ -49,29 +54,20 @@ export default async function SignIn(props: {
           </Link>
         </p>
         
-        {isSignUp && (
-          <p className="text-xs text-muted-foreground mt-2">
-            You&apos;ll receive an email confirmation after sign up.
-          </p>
-        )}
-        
-        {hasExistingEmailError && (
-          <div className="mt-4 p-3 bg-amber-50 text-amber-800 border border-amber-200 rounded-md">
-            <p className="text-sm">
-              An account with this email already exists. Please sign in instead.
-              <Link href="/sign-in" className="ml-1 font-medium underline">
-                Sign in
-              </Link>
-            </p>
-          </div>
+        {/* Error Messages */}
+        {(errorCode || errorMessage) && (
+          <ErrorMessage 
+            code={errorCode} 
+            message={errorMessage} 
+            showSignUpLink={errorCode === 'no_account'}
+            className="mt-4"
+          />
         )}
       </div>
       
       <div className="flex flex-col space-y-6">
         {/* Google Sign-in Button */}
-        <div className="w-full">
-          <GoogleSignInButton />
-        </div>
+        <GoogleSignInButton />
         
         {/* Divider */}
         <div className="relative">
@@ -102,7 +98,7 @@ export default async function SignIn(props: {
               <Label htmlFor="password">Password</Label>
               {!isSignUp && (
                 <Link 
-                  href="#" 
+                  href="/reset-password" 
                   className="text-xs text-muted-foreground hover:text-primary hover:underline"
                 >
                   Forgot password?
@@ -120,8 +116,6 @@ export default async function SignIn(props: {
           </div>
           
           <AuthSubmitButton text={buttonText} />
-          
-          <FormMessage message={searchParams} />
         </form>
         
         <p className="text-center text-xs text-muted-foreground mt-8">

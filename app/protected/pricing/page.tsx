@@ -9,7 +9,7 @@ export default async function PricingPage() {
   const { data, error } = await client.billing.getProducts();
   const { data: subscriptionData } = await client.billing.getSubscriptions();
 
-  if (error) {
+  if (error || data.products.length === 0) {
     return (
       <div className="space-y-8">
         <div className="flex flex-col">
@@ -102,19 +102,32 @@ export default async function PricingPage() {
       : null;
 
   return (
+    
     <>
-      <div>
-        <h1 className="text-2xl font-medium">Pricing Plans</h1>
-        <p className="text-muted-foreground mt-2">
-          Choose the perfect plan for your needs
-        </p>
-      </div>
-
       <PricingContent
         products={data.products}
         currentProductId={currentProductId}
         currentSubscription={currentSubscription}
       />
+      
+      <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900 rounded-lg">
+        <div className="flex items-start gap-3">
+          <InfoIcon size={20} className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+          <div>
+            <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300">Developer Resources</h4>
+            <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">
+              Learn how to <a 
+                href="https://update.dev/docs/reference/javascript/get-products" 
+                className="font-medium underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                fetch and display products using the Update API
+              </a> in your own applications.
+            </p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

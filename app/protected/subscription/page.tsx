@@ -149,6 +149,25 @@ export default async function Page() {
           <pre>{JSON.stringify(data.subscriptions, null, 2)}</pre>
         </div>
       </div>
+      
+      <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900 rounded-lg">
+        <div className="flex items-start gap-3">
+          <InfoIcon size={20} className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+          <div>
+            <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300">Developer Resources</h4>
+            <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">
+              Learn how to <a 
+                href="https://update.dev/docs/reference/javascript/get-user-subscriptions" 
+                className="font-medium underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                retrieve and manage user subscriptions with the Update API
+              </a> in your own applications.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

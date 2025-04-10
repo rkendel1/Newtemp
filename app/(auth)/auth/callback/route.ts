@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/update/server";
 import { NextResponse } from "next/server";
+import { ErrorCode } from "@/utils/errors";
 
 export async function GET(request: Request) {
   const client = await createClient();
@@ -8,49 +9,61 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
   
-  console.log("Auth callback called with URL:", requestUrl.toString());
+  if (!code) {
+    // No code parameter in URL
+    return NextResponse.redirect(
+      new URL(`/sign-in?code=${ErrorCode.UNKNOWN_ERROR}&message=Invalid+authentication+link`, request.url)
+    );
+  }
   
-  if (code) {
-    try {
-      // Exchange the code for a session
-      console.log("Exchanging code for session");
-      const result = await client.auth.exchangeCodeForSession(code);
-      
-      if (result.error) {
-        // If there's an error, redirect to sign in with the error
-        console.error("Error exchanging code:", result.error.message);
-        return NextResponse.redirect(
-          new URL(`/sign-in?error=${encodeURIComponent(result.error.message)}`, request.url)
-        );
-      }
-      
-      console.log("Session established for user:", result.data?.user?.email);
-      
-      // Check if this is likely an email confirmation
-      // Supabase doesn't explicitly tell us the type, but we can infer it
-      const isEmailConfirmation = requestUrl.searchParams.has("type") || 
-                                 requestUrl.searchParams.has("next") ||
-                                 requestUrl.searchParams.has("email") ||
-                                 requestUrl.toString().includes("confirm");
-                                 
-      if (isEmailConfirmation && result.data?.user) {
-        console.log("Identified as email confirmation flow");
-        // Email confirmation success
-        return NextResponse.redirect(
-          new URL('/protected?message=Your+email+has+been+confirmed', request.url)
-        );
-      }
-      
-      console.log("Redirecting to protected page");
-      return NextResponse.redirect(new URL("/protected", request.url));
-    } catch (error) {
-      console.error("Unexpected error in auth callback:", error);
+  try {
+    // Exchange the code for a session
+    const result = await client.auth.exchangeCodeForSession(code);
+    
+    if (result.error) {
+      // If there's an error, redirect to sign in with the error
+      const errorMessage = result.error.message ? encodeURIComponent(result.error.message) : "Authentication+failed";
       return NextResponse.redirect(
-        new URL("/sign-in?error=An+unexpected+error+occurred", request.url)
+        new URL(`/sign-in?code=${ErrorCode.UNKNOWN_ERROR}&message=${errorMessage}`, request.url)
       );
     }
-  } else {
-    console.warn("No code parameter found in callback URL");
-    return NextResponse.redirect(new URL("/sign-in?error=Invalid+authentication+link", request.url));
+    
+    // Check if this is a password reset flow
+    const typeParam = requestUrl.searchParams.get("type");
+    const isPasswordReset = typeParam === "recovery";
+                           
+    if (isPasswordReset) {
+      // Password reset flow - redirect to the reset confirm page
+      return NextResponse.redirect(
+        new URL('/reset-password/confirm', request.url)
+      );
+    }
+    
+    // Check if this is likely an email confirmation
+    // Supabase doesn't explicitly tell us the type, but we can infer it
+    const hasTypeParam = requestUrl.searchParams.has("type");
+    const hasNextParam = requestUrl.searchParams.has("next");
+    const hasEmailParam = requestUrl.searchParams.has("email");
+    const includesConfirmInUrl = requestUrl.toString().toLowerCase().includes("confirm");
+    
+    const isEmailConfirmation = hasTypeParam || hasNextParam || hasEmailParam || includesConfirmInUrl;
+                              
+    if (isEmailConfirmation && result.data?.user) {
+      // Email confirmation success
+      return NextResponse.redirect(
+        new URL('/protected?message=Your+email+has+been+confirmed', request.url)
+      );
+    }
+    
+    // Default success case
+    return NextResponse.redirect(new URL("/protected", request.url));
+  } catch (error) {
+    // Log the unexpected error for debugging
+    console.error("Unexpected error during authentication callback:", error);
+    
+    // Handle unexpected errors during auth callback
+    return NextResponse.redirect(
+      new URL(`/sign-in?code=${ErrorCode.UNKNOWN_ERROR}&message=Authentication+process+failed`, request.url)
+    );
   }
 }

@@ -16,7 +16,7 @@ export default function GoogleSignInButton() {
         disabled={pending}
       >
         <GoogleIcon className="h-4 w-4" />
-        <span>{pending ? "Signing in..." : "Continue with Google"}</span>
+        {pending ? "Signing in..." : "Continue with Google"}
       </Button>
     </form>
   );
