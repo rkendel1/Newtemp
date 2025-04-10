@@ -1,4 +1,8 @@
-# 🚀 Update.dev Boilerplate - Next.js 15 SaaS Starter Kit
+# Next.js Payment-Ready SaaS Template - Complete Monetization Boilerplate
+
+🚀 Launch your SaaS faster with this production-ready Next.js 15 monetization template. Built for developers who need a complete payment system, subscription management, and user authentication out of the box.
+
+⚡️ Everything you need to start charging customers: Stripe integration, Supabase auth, Update.dev billing and auth wrapper, premium content gating, and beautiful Tailwind UI components. Perfect for indie hackers and startups building monetized applications.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.0.0-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
@@ -7,7 +11,9 @@
 [![Stripe](https://img.shields.io/badge/Stripe-14.0.0-008CDD?style=for-the-badge&logo=stripe)](https://stripe.com)
 [![Update](https://img.shields.io/badge/Update-1.0.0-181818?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6IiBmaWxsPSIjMDAwIi8+PC9zdmc+)](https://update.dev)
 
-A production-ready SaaS boilerplate built with Next.js 15, featuring authentication, subscription management, and a beautiful dashboard. Perfect for launching your next SaaS product quickly and efficiently.
+🚀⚡️📈 Production-ready Next.js 15 boilerplate for building monetizable SaaS applications. Built with developer experience in mind: Next.js 15 + TypeScript + Tailwind CSS + Supabase + Update.dev + Stripe + ESLint + Prettier + PostCSS ✨
+
+A comprehensive starter kit for developers looking to build and monetize their SaaS applications quickly. This boilerplate includes everything you need to get started with payments, authentication, and premium content management.
 
 ## ✨ Key Features
 
