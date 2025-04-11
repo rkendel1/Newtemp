@@ -59,9 +59,9 @@ export function Sidebar() {
         <div className="p-6 border-border mb-4">
           <Link href="/protected" className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-              <span className="w-3 h-3 bg-white rounded-sm"></span>
+              <span className="w-3 h-3 bg-white dark:bg-background rounded-sm"></span>
             </span>
-            <span className="font-bold text-xl">SampleApp</span>
+            <span className="font-bold text-xl text-foreground">SampleApp</span>
           </Link>
         </div>
         
@@ -81,9 +81,9 @@ export function Sidebar() {
       <div className="p-6 border-border">
         <Link href="/protected" className="flex items-center gap-2">
           <span className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-            <span className="w-3 h-3 bg-white rounded-sm"></span>
+            <span className="w-3 h-3 bg-white dark:bg-background rounded-sm"></span>
           </span>
-          <span className="font-bold text-xl">SampleApp</span>
+          <span className="font-bold text-xl text-foreground">SampleApp</span>
         </Link>
       </div>
       

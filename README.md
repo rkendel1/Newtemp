@@ -72,6 +72,9 @@
 - Loading states and spinners
 - Error boundaries
 - Custom error messages
+- Dark mode support with automatic system preference detection
+- Smooth theme transitions
+- Consistent color scheme across light and dark modes
 
 ## 🚀 Getting Started
 

@@ -312,7 +312,7 @@ function PricingCard({
   return (
     <div className={`border rounded-xl p-8 ${highlighted ? "border-primary ring-2 ring-primary/20 shadow-lg" : ""} bg-card relative`}>
       {highlighted && (
-        <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm font-medium py-1 px-4 rounded-full">
+        <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground dark:text-primary-foreground text-sm font-medium py-1 px-4 rounded-full">
           Most Popular
         </span>
       )}
