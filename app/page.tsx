@@ -41,7 +41,7 @@ export default function Home() {
               </a>
             </Button>
             <Button size="lg" variant="outline" className="gap-2 h-12 px-6" asChild>
-              <a href="https://www.youtube.com/watch?v=XJo3nl4gvQY" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.youtube.com/watch?v=0qrs_kQAK7U" target="_blank" rel="noopener noreferrer">
                 <Play size={18} className="fill-current" />
                 Watch demo
               </a>
@@ -241,7 +241,7 @@ export default function Home() {
               </a>
             </Button>
             <Button size="lg" variant="outline" className="gap-2 h-12 px-6" asChild>
-              <a href="https://www.youtube.com/watch?v=XJo3nl4gvQY" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.youtube.com/watch?v=0qrs_kQAK7U" target="_blank" rel="noopener noreferrer">
                 <Play size={18} className="fill-current" />
                 Watch demo
               </a>

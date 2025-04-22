@@ -11,7 +11,7 @@ export const APP_CONFIG = {
   
   // External service URLs
   externalLinks: {
-    youtubeDemo: process.env.NEXT_PUBLIC_YOUTUBE_DEMO_URL || 'https://www.youtube.com/watch?v=XJo3nl4gvQY',
+    youtubeDemo: process.env.NEXT_PUBLIC_YOUTUBE_DEMO_URL || 'https://www.youtube.com/watch?v=0qrs_kQAK7U',
     discord: process.env.NEXT_PUBLIC_DISCORD_URL || 'https://discord.com/invite/Guege5tXFK',
     github: process.env.NEXT_PUBLIC_GITHUB_URL || 'https://github.com/updatedotdev/js',
     docs: 'https://update.dev/docs',

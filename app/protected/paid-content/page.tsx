@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
-import { createClient } from "@/utils/update/client";
+import { createUpdateClient } from "@/utils/update/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Cat, Loader2, AlertCircle, Zap } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image"; 
 import dynamic from 'next/dynamic';
 
 // Define subscription type
@@ -127,7 +127,7 @@ export default function PaidContentPage() {
     
     try {
       // Get client
-      const client = createClient();
+      const client = createUpdateClient();
       
       // Get subscription
       const { data: subscriptionData } = await client.billing.getSubscriptions();

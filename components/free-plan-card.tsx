@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Subscription } from "@updatedev/js";
-import { createClient } from "@/utils/update/client";
+import { createUpdateClient } from "@/utils/update/client";
 import { useState } from "react";
 import { Loader2, Check, BadgeCheck, CreditCard } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +24,7 @@ export default function FreePlanCard({
     
     try {
       setIsLoading(true);
-      const client = createClient();
+      const client = createUpdateClient();
       await client.billing.updateSubscription(currentSubscription.id, {
         cancel_at_period_end: true,
       });

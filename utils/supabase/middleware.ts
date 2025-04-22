@@ -1,19 +1,15 @@
-import { createServerClient } from "@updatedev/ssr/supabase";
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
-  let response = NextResponse.next({
+  let supabaseResponse = NextResponse.next({
     request,
   });
 
-  const client = createServerClient(
-    process.env.NEXT_PUBLIC_UPDATE_PUBLIC_KEY!,
+  const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      billing: {
-        environment: process.env.NODE_ENV === "production" ? "live" : "test",
-      },
       cookies: {
         getAll() {
           return request.cookies.getAll();
@@ -22,26 +18,26 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
-          response = NextResponse.next({
+          supabaseResponse = NextResponse.next({
             request,
           });
           cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, options)
           );
         },
       },
     }
   );
 
-  const user = await client.auth.getUser();
+  // IMPORTANT: Avoid writing any logic between createServerClient and
+  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
+  // issues with users being randomly logged out.
+
+  const user = await supabase.auth.getUser();
 
   if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
-  if (request.nextUrl.pathname === "/" && !user.error) {
-    return NextResponse.redirect(new URL("/protected", request.url));
-  }
-
-  return response;
+  return supabaseResponse;
 }

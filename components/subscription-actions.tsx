@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { createClient } from "@/utils/update/client";
+import { createUpdateClient } from "@/utils/update/client";
 import { Subscription } from "@updatedev/js";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ export default function SubscriptionActions({
 
   async function handleCancelSubscription(id: string) {
     setIsLoading(true);
-    const client = createClient();
+    const client = createUpdateClient();
     await client.billing.updateSubscription(id, {
       cancel_at_period_end: true,
     });
@@ -26,7 +26,7 @@ export default function SubscriptionActions({
 
   async function handleReactivateSubscription(id: string) {
     setIsLoading(true);
-    const client = createClient();
+    const client = createUpdateClient();
     await client.billing.updateSubscription(id, {
       cancel_at_period_end: false,
     });

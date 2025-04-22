@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
-import { createClient } from "@/utils/update/client";
+import { createSupabaseClient } from "@/utils/supabase/client";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ResetPasswordConfirmPage() {
@@ -49,7 +49,7 @@ export default function ResetPasswordConfirmPage() {
     setError(null);
     
     try {
-      const client = createClient();
+      const client = createSupabaseClient();
       const { error } = await client.auth.updateUser({ password });
       
       if (error) {

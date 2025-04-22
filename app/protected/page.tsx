@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/update/server";
+import { createSupabaseClient } from "@/utils/supabase/server";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle } from "lucide-react";
 
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default async function ProtectedPage({ searchParams }: Props) {
-  const client = await createClient();
+  const client = await createSupabaseClient();
   const {
     data: { user },
   } = await client.auth.getUser();
@@ -132,7 +132,7 @@ export default async function ProtectedPage({ searchParams }: Props) {
           </a>
           
           <a 
-            href="https://www.youtube.com/watch?v=XJo3nl4gvQY" 
+            href="https://www.youtube.com/watch?v=0qrs_kQAK7U" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-4 group"

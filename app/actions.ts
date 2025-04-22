@@ -1,9 +1,9 @@
 "use server";
 
-import { createClient } from "@/utils/update/server";
 import { redirect } from "next/navigation";
 import { encodedRedirect } from "@/utils/redirect";
 import { ErrorCode, handleAuthError } from "@/utils/errors";
+import { createSupabaseClient } from "@/utils/supabase/server";
 
 // Simple email validation function
 function isEmail(email: string): boolean {
@@ -41,7 +41,7 @@ export const signInAction = async (formData: FormData) => {
     return handleAuthError(ErrorCode.INVALID_PASSWORD);
   }
 
-  const client = await createClient();
+  const client = await createSupabaseClient();
   
   // First, try to sign in with the provided credentials
   const { error: signInError } = await client.auth.signInWithPassword({
@@ -141,7 +141,7 @@ export const signUpAction = async (formData: FormData) => {
   
   const email = emailValue.trim();
   const password = passwordValue;
-  const client = await createClient();
+  const client = await createSupabaseClient();
 
   console.log(`[SIGNUP] Starting sign-up process for email: ${email.substring(0, 3)}...`);
 
@@ -302,7 +302,7 @@ export const signUpAction = async (formData: FormData) => {
 };
 
 export const googleSignInAction = async () => {
-  const client = await createClient();
+  const client = await createSupabaseClient();
   
   const { data, error } = await client.auth.signInWithOAuth({
     provider: 'google',
@@ -319,13 +319,13 @@ export const googleSignInAction = async () => {
 };
 
 export const signOutAction = async () => {
-  const client = await createClient();
+  const client = await createSupabaseClient();
   await client.auth.signOut();
   return redirect("/sign-in");
 };
 
 export const resendConfirmationEmail = async (email: string) => {
-  const client = await createClient();
+  const client = await createSupabaseClient();
   
   const { error } = await client.auth.resend({
     type: 'signup',

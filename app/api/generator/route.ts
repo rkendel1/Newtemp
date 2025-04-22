@@ -1,7 +1,7 @@
-import { createClient } from "@/utils/update/server";
+import { createUpdateClient } from "@/utils/update/server";
 
 export async function POST() {
-  const client = await createClient();
+  const client = await createUpdateClient();  
   const { data, error } = await client.entitlements.check("premium");
 
   if (error || !data.hasAccess) {

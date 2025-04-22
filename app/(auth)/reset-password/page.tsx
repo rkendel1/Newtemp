@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
-import { createClient } from "@/utils/update/client";
+import { createSupabaseClient } from "@/utils/supabase/client"; 
 import { useRouter } from "next/navigation";
 import { getFullUrl } from "@/utils/config";
 
@@ -29,7 +29,7 @@ export default function ResetPasswordPage() {
     setError(null);
     
     try {
-      const client = createClient();
+      const client = createSupabaseClient();
       const { error } = await client.auth.resetPasswordForEmail(email, {
         redirectTo: getFullUrl('auth/callback?type=recovery'),
       });

@@ -1,9 +1,9 @@
-import { createClient } from "@/utils/update/server";
+import { createSupabaseClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import { ErrorCode } from "@/utils/errors";
 
 export async function GET(request: Request) {
-  const client = await createClient();
+  const client = await createSupabaseClient();
   
   // Get the URL and code from the request
   const requestUrl = new URL(request.url);

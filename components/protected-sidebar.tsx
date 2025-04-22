@@ -1,12 +1,12 @@
 import InPageSidebar from "@/components/in-page-sidebar";
-import { createClient } from "@/utils/update/server";
+import { createUpdateClient } from "@/utils/update/server";
 
 export default async function ProtectedSidebar() {
-  const client = await createClient();
+  const client = await createUpdateClient();
   const { data } = await client.entitlements.check("premium");
 
   return (
-    <InPageSidebar
+    <InPageSidebar  
       basePath="/protected"
       items={[
         {

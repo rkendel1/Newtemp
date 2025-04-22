@@ -204,7 +204,7 @@ Everyone is welcome to contribute. Open an issue if you have any questions or fi
 
 - [Website](https://update.dev)
 - [GitHub](https://github.com/update-dev/js)
-- [YouTube Tutorials](https://youtube.com/@update-dev)
+- [YouTube Tutorials](https://youtube.com/@updatedotdev)
 - [Documentation](https://update.dev/docs)
 
 ---

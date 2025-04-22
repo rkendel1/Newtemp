@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ProductWithPrices, Subscription } from "@updatedev/js";
-import { createClient } from "@/utils/update/client";
+import { createUpdateClient } from "@/utils/update/client";
 import { useState } from "react";
 import { Loader2, Check, Zap, CreditCard } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +45,7 @@ export default function PricingCard({
 
   async function handleSelectPlan(priceId: string) {
     setIsLoading(true);
-    const client = createClient();
+    const client = createUpdateClient();
     const redirectUrl = `${window.location.origin}/protected/subscription`;
     const { data, error } = await client.billing.createCheckoutSession(
       priceId,
@@ -67,7 +67,7 @@ export default function PricingCard({
     
     try {
       setActionLoading(true);
-      const client = createClient();
+      const client = createUpdateClient();
       await client.billing.updateSubscription(currentSubscription.id, {
         cancel_at_period_end: true,
       });
@@ -87,7 +87,7 @@ export default function PricingCard({
     
     try {
       setActionLoading(true);
-      const client = createClient();
+      const client = createUpdateClient();
       await client.billing.updateSubscription(currentSubscription.id, {
         cancel_at_period_end: false,
       });

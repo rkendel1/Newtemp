@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import { createClient } from "@/utils/update/server";
+import { createSupabaseClient } from "@/utils/supabase/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const client = await createClient();
+  const client = await createSupabaseClient();
   const {
     data: { user },
   } = await client.auth.getUser();

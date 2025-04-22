@@ -20,10 +20,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { createClient } from "@/utils/update/client";
+import { createSupabaseClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { APP_CONFIG } from "@/utils/config";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { createUpdateClient } from "@/utils/update/client";
 
 export function TopBar() {
   const [email, setEmail] = useState<string | null>(null);
@@ -40,8 +41,9 @@ export function TopBar() {
       setError(null);
       
       try {
-        const client = createClient();
-        const { data, error: userError } = await client.auth.getUser();
+        const supabaseClient = createSupabaseClient();
+        const updateClient = createUpdateClient();
+        const { data, error: userError } = await supabaseClient.auth.getUser();
         
         if (userError) {
           throw new Error(userError.message);
@@ -51,10 +53,10 @@ export function TopBar() {
         
         // Get subscription data
         try {
-          const { data: subscriptionData, error: subscriptionError } = await client.billing.getSubscriptions();
+          const { data: subscriptionData, error: subscriptionError } = await updateClient.billing.getSubscriptions();
           
           if (subscriptionError) {
-            console.error("Subscription error:", subscriptionError);
+            console.error("\n\n\n\nSubscription error:", subscriptionError);
             // Don't throw here - we can still show the user info without subscription data
           }
           

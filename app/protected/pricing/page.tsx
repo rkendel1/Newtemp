@@ -1,11 +1,11 @@
-import { createClient } from "@/utils/update/server";
+import { createUpdateClient } from "@/utils/update/server";
 import PricingContent from "@/components/pricing-content";
 import { Card } from "@/components/ui/card";
 import { InfoIcon, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default async function PricingPage() {
-  const client = await createClient();
+  const client = await createUpdateClient();
   const { data, error } = await client.billing.getProducts();
   const { data: subscriptionData } = await client.billing.getSubscriptions();
 
