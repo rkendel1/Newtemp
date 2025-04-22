@@ -1,21 +1,21 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { ProductWithPrices, Subscription } from "@updatedev/js";
+import { ProductWithPrices /*, Subscription */ } from "@updatedev/js"; // Commented out unused Subscription
 import { Button } from "@/components/ui/button";
 import PricingCard from "@/components/pricing-card";
 import { cn } from "@/utils/styles";
 import { CreditCard } from "lucide-react";
-import FreePlanCard from "@/components/free-plan-card";
+// import FreePlanCard from "@/components/free-plan-card";
 
 export default function PricingContent({
   products,
-  currentProductId,
-  currentSubscription,
+  // currentProductId, // Removed prop
+  // currentSubscription, // Removed prop
 }: {
   products: ProductWithPrices[];
-  currentProductId: string | null;
-  currentSubscription?: Subscription | null;
+  // currentProductId: string | null; // Removed prop type
+  // currentSubscription?: Subscription | null; // Removed prop type
 }) {
   const [interval, setInterval] = useState<"month" | "year" | "one-time">(
     "month"
@@ -24,9 +24,8 @@ export default function PricingContent({
   // Memoize sorted products to prevent recalculation on every render
   const sortedProducts = useMemo(() => {
     return [...products].sort((a, b) => {
-      // Current plan always first
-      if (a.id === currentProductId) return -1;
-      if (b.id === currentProductId) return 1;
+      // Removed sorting logic based on currentProductId
+      // Now just sorts by price for the selected interval
       
       // Find prices for the current interval
       const aPrice = a.prices?.find(
@@ -40,11 +39,13 @@ export default function PricingContent({
       );
       
       // Sort by price (low to high)
-      if (!aPrice?.unit_amount) return 1;
-      if (!bPrice?.unit_amount) return -1;
+      // Handle cases where price might be missing for the interval
+      if (!aPrice?.unit_amount && !bPrice?.unit_amount) return 0; // Keep order if both missing
+      if (!aPrice?.unit_amount) return 1; // Missing price goes last
+      if (!bPrice?.unit_amount) return -1; // Missing price goes last
       return aPrice.unit_amount - bPrice.unit_amount;
     });
-  }, [products, currentProductId, interval]);
+  }, [products, interval]); // Removed currentProductId from dependency array
 
   // Memoize discount calculation to prevent recalculation on every render
   const yearlyDiscount = useMemo(() => {
@@ -137,22 +138,19 @@ export default function PricingContent({
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl mx-auto">
+      <div className="flex flex-wrap justify-center gap-8 w-full max-w-6xl mx-auto">
         {/* Free Plan Card */}
-        <FreePlanCard 
+        {/* <FreePlanCard 
           isCurrentPlan={currentProductId === null} 
           currentSubscription={currentSubscription}
-        />
+        /> */}
         
         {sortedProducts.map(product => (
           <PricingCard
             key={product.id}
             product={product}
             interval={interval}
-            isCurrentPlan={
-              currentProductId != null && product.id === currentProductId
-            }
-            currentSubscription={currentSubscription}
+            // Removed isCurrentPlan and currentSubscription props
           />
         ))}
       </div>
