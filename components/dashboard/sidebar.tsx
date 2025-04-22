@@ -11,6 +11,8 @@ import {
   Loader2,
   AlertCircle
 } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 import { APP_CONFIG } from "@/utils/config";
 import { useState, useEffect } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -28,6 +30,7 @@ export function Sidebar() {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { theme, setTheme } = useTheme();
   
   // Simulate checking permissions or loading data
   // In a real app, this might fetch navigation items based on user permissions
@@ -118,6 +121,21 @@ export function Sidebar() {
           </ul>
         )}
       </nav>
+      
+      {/* Theme Toggle - Added to the bottom */}
+      <div className="mt-auto p-4">
+         <Button 
+          variant="ghost"
+          size="icon"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          aria-label="Toggle theme"
+          className="text-muted-foreground hover:text-foreground"
+        >
+          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </div>
     </aside>
   );
 } 

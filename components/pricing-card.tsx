@@ -224,6 +224,7 @@ export default function PricingCard({
     <div 
       className={cn(
         "relative rounded-lg overflow-hidden transition-all duration-200 bg-card flex flex-col h-full",
+        "w-full sm:max-w-sm",
         isCurrentPlan 
           ? "border border-primary/50 shadow-md dark:shadow-primary/10" 
           : "border border-border hover:border-primary/50 hover:shadow-sm"
