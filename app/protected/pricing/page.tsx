@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 export default async function PricingPage() {
   const client = await createUpdateClient();
   const { data, error } = await client.billing.getProducts();
-  const { data: subscriptionData } = await client.billing.getSubscriptions();
 
   if (error || data.products.length === 0) {
     return (
@@ -90,24 +89,11 @@ export default async function PricingPage() {
     );
   }
 
-  const currentProductId =
-    subscriptionData.subscriptions == null ||
-      subscriptionData.subscriptions.length === 0
-      ? null
-      : subscriptionData.subscriptions[0].product.id;
-      
-  const currentSubscription = 
-    subscriptionData.subscriptions && subscriptionData.subscriptions.length > 0
-      ? subscriptionData.subscriptions[0]
-      : null;
-
   return (
     
     <>
       <PricingContent
         products={data.products}
-        currentProductId={currentProductId}
-        currentSubscription={currentSubscription}
       />
       
       <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900 rounded-lg">
