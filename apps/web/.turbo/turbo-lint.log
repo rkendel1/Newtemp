@@ -1,0 +1,6 @@
+
+
+> web@0.1.0 lint /Users/wy/Desktop/dir/dev/saas-template/apps/web
+> next lint
+
+[32m✔ No ESLint warnings or errors[39m

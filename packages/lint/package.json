@@ -1,0 +1,16 @@
+{
+  "name": "@saas-template/lint",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./next.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@next/eslint-plugin-next": "^15.2.4",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "15.1.7",
+    "eslint-plugin-react-hooks": "^5.2.0"
+  }
+}

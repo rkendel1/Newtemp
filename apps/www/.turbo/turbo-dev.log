@@ -1,0 +1,11 @@
+
+> www@0.1.0 dev /Users/wy/Desktop/dir/dev/saas-template/apps/www
+> next dev -p 3001
+
+   [1m[38;2;173;127;168m▲ Next.js 15.3.1[39m[22m
+   - Local:        http://localhost:3001
+   - Network:      http://10.0.0.171:3001
+   - Environments: .env
+
+ [32m[1m✓[22m[39m Starting...
+ [32m[1m✓[22m[39m Ready in 1119ms

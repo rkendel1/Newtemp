@@ -1,0 +1,12 @@
+{
+  "name": "@saas-template/prettier",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./next.prettier.config.js",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "prettier": "^3.0.0"
+  }
+}
