@@ -8,65 +8,13 @@
    - Environments: .env
 
  [32m[1m✓[22m[39m Starting...
- [32m[1m✓[22m[39m Ready in 1122ms
- [32m[1m✓[22m[39m Compiled /middleware in 329ms (180 modules)
- [37m[1m○[22m[39m Compiling /_not-found ...
+ [32m[1m✓[22m[39m Ready in 5.3s
+ [32m[1m✓[22m[39m Compiled /middleware in 106ms (180 modules)
 <w> [1m[33m[webpack.cache.PackFileCacheStrategy] Serializing big strings (114kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)[39m[22m
- [32m[1m✓[22m[39m Compiled /_not-found in 7.1s (876 modules)
- GET /dashboard [33m404[39m in 7577ms
- [32m[1m✓[22m[39m Compiled in 110ms (349 modules)
- GET /dashboard [33m404[39m in 13ms
- GET /dashboard [33m404[39m in 103ms
- [32m[1m✓[22m[39m Compiled in 68ms (349 modules)
- [32m[1m✓[22m[39m Compiled in 76ms (349 modules)
- GET /dashboard [33m404[39m in 8ms
- [32m[1m✓[22m[39m Compiled /dashboard in 311ms (1060 modules)
- GET /dashboard [32m200[39m in 370ms
- GET /dashboard [32m200[39m in 8ms
- GET /dashboard [32m200[39m in 7ms
- GET /dashboard [32m200[39m in 148ms
- [32m[1m✓[22m[39m Compiled in 85ms (350 modules)
- GET /dashboard [32m200[39m in 9ms
- [32m[1m✓[22m[39m Compiled in 66ms (350 modules)
- [32m[1m✓[22m[39m Compiled in 67ms (350 modules)
- GET /dashboard [32m200[39m in 14ms
- GET /dashboard [32m200[39m in 7ms
- [32m[1m✓[22m[39m Compiled in 117ms (1074 modules)
- GET /dashboard [32m200[39m in 88ms
- GET /dashboard [32m200[39m in 10ms
- [32m[1m✓[22m[39m Compiled in 62ms (350 modules)
- [32m[1m✓[22m[39m Compiled in 64ms (350 modules)
- GET /dashboard [32m200[39m in 24ms
- GET /dashboard [32m200[39m in 8ms
- [32m[1m✓[22m[39m Compiled in 167ms (1074 modules)
- GET /dashboard [32m200[39m in 116ms
- GET /dashboard [32m200[39m in 6ms
- [32m[1m✓[22m[39m Compiled in 71ms (350 modules)
- GET /dashboard [32m200[39m in 97ms
- [32m[1m✓[22m[39m Compiled in 317ms (1060 modules)
- [32m[1m✓[22m[39m Compiled in 53ms (350 modules)
- [32m[1m✓[22m[39m Compiled in 101ms (1074 modules)
- GET /dashboard [32m200[39m in 218ms
- [32m[1m✓[22m[39m Compiled in 225ms (894 modules)
- GET /dashboard [32m200[39m in 59ms
- [32m[1m✓[22m[39m Compiled in 69ms (347 modules)
- [32m[1m✓[22m[39m Compiled in 143ms (1070 modules)
- GET /dashboard [32m200[39m in 144ms
- GET /dashboard [32m200[39m in 11ms
- GET /dashboard [32m200[39m in 6ms
- [32m[1m✓[22m[39m Compiled in 52ms (347 modules)
- GET /dashboard [32m200[39m in 8ms
- [32m[1m✓[22m[39m Compiled in 187ms (890 modules)
- GET /dashboard [32m200[39m in 63ms
- [32m[1m✓[22m[39m Compiled in 75ms (347 modules)
- GET /dashboard [32m200[39m in 9ms
- [32m[1m✓[22m[39m Compiled in 63ms (347 modules)
- GET /dashboard [32m200[39m in 8ms
- [32m[1m✓[22m[39m Compiled in 60ms (347 modules)
- GET /dashboard [32m200[39m in 11ms
- [32m[1m✓[22m[39m Compiled in 59ms (347 modules)
- GET /dashboard [32m200[39m in 9ms
- [32m[1m✓[22m[39m Compiled in 135ms (890 modules)
- GET /dashboard [32m200[39m in 123ms
- [32m[1m✓[22m[39m Compiled in 139ms (347 modules)
- [32m[1m✓[22m[39m Compiled in 75ms (347 modules)
+ [37m[1m○[22m[39m Compiling / ...
+ [32m[1m✓[22m[39m Compiled / in 5.7s (907 modules)
+ [32m[1m✓[22m[39m Compiled in 269ms (347 modules)
+ GET / [32m200[39m in 6176ms
+ [32m[1m✓[22m[39m Compiled /dashboard in 196ms (909 modules)
+ GET /dashboard [32m200[39m in 270ms
+ GET /dashboard [32m200[39m in 13ms
