@@ -1,5 +1,4 @@
 
-
-> @saas-template/schema@0.1.0 typecheck /Users/wy/Desktop/dir/dev/saas-template/packages/schema
+> @saas-template/schema@0.1.0 typecheck /home/runner/work/Newtemp/Newtemp/packages/schema
 > tsc --noEmit
 
