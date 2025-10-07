@@ -41,3 +41,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# build artifacts
+dist/
+.turbo/
+
+# package manager bins
+**/node_modules/.bin/

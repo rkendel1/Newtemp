@@ -7,6 +7,9 @@ import { notFoundHandler } from './middleware/not-found-handler';
 import { authRoutes } from './groups/auth';
 import { userRoutes } from './groups/user';
 import { subscriptionRoutes } from './groups/subscription';
+import { creatorRoutes } from './groups/creator';
+import { stripeRoutes } from './groups/stripe';
+import { subscriberRoutes } from './groups/subscriber';
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -22,6 +25,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/creators', creatorRoutes);
+app.use('/api/stripe', stripeRoutes);
+app.use('/api/subscribers', subscriberRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
