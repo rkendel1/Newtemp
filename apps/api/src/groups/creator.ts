@@ -26,6 +26,7 @@ router.get('/me', async (req, res) => {
       stripe_account_id: null,
       onboarding_completed: false,
       subscription_status: 'trial',
+      role: 'saas_creator', // Include role in response
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     });
@@ -41,6 +42,11 @@ router.post('/', validateRequest(createCreatorSchema), async (req, res) => {
     // TODO: Get user_id from auth token
     const userId = '1'; // Mock user ID
     
+    // TODO: Check if this is the first user in the database
+    // If yes, assign 'platform_owner' role, otherwise 'saas_creator'
+    const isFirstUser = false; // TODO: Implement actual database check
+    const role = isFirstUser ? 'platform_owner' : 'saas_creator';
+    
     // TODO: Implement actual database creation
     res.status(201).json({
       id: '1',
@@ -50,6 +56,7 @@ router.post('/', validateRequest(createCreatorSchema), async (req, res) => {
       stripe_account_id: null,
       onboarding_completed: false,
       subscription_status: 'trial',
+      role,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     });
