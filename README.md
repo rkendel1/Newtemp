@@ -2,6 +2,21 @@
 
 A modern SaaS template built with Next.js, now restructured as a monorepo to match the pod architecture.
 
+## 🚀 New: SaaS Enablement Platform
+
+This template now includes a complete **SaaS enablement platform** that allows SaaS creators to launch their products quickly. See [SAAS_PLATFORM_SETUP.md](./SAAS_PLATFORM_SETUP.md) for detailed setup instructions.
+
+### Key Features
+
+- **Quick Onboarding**: SaaS creators can sign up and launch in minutes
+- **Stripe Integration**: Deep integration with Stripe for payment processing via OAuth
+- **White-Label Portals**: Customizable subscriber portals for each product
+- **Product Management**: Create and manage multiple SaaS products
+- **Pricing Tiers**: Flexible pricing tier configuration
+- **Subscriber Management**: Track and manage customer subscriptions
+- **Usage Metering**: Monitor and record usage metrics
+- **Turnkey Solution**: All infrastructure, billing, and white-label features included
+
 ## Structure
 
 This monorepo follows the same structure as the pod project:
