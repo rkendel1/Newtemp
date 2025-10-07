@@ -7,3 +7,4 @@ export { DropdownMenu } from './dropdown-menu';
 export { Input } from './input';
 export { Label } from './label';
 export { Spinner } from './spinner';
+export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
