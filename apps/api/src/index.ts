@@ -10,6 +10,7 @@ import { subscriptionRoutes } from './groups/subscription';
 import { creatorRoutes } from './groups/creator';
 import { stripeRoutes } from './groups/stripe';
 import { subscriberRoutes } from './groups/subscriber';
+import { platformRoutes } from './groups/platform';
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -28,6 +29,7 @@ app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/creators', creatorRoutes);
 app.use('/api/stripe', stripeRoutes);
 app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/platform', platformRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

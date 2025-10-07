@@ -37,6 +37,7 @@ The SaaS enablement platform allows SaaS creators to:
    - Pricing tiers (`/api/creators/products/:id/tiers`)
    - Subscriber management (`/api/subscribers`)
    - Stripe integration (`/api/stripe`)
+   - Platform owner management (`/api/platform`) - Platform Owner only
 
 ## Environment Setup
 
@@ -104,10 +105,13 @@ CREATE TABLE saas_creators (
   stripe_refresh_token TEXT,
   onboarding_completed BOOLEAN DEFAULT FALSE,
   subscription_status VARCHAR(50) DEFAULT 'trial',
+  role VARCHAR(50) DEFAULT 'saas_creator' CHECK (role IN ('platform_owner', 'saas_creator')),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ```
+
+**Note:** The first user to register will be assigned the `platform_owner` role automatically. All subsequent users will be assigned the `saas_creator` role.
 
 #### creator_products
 ```sql
@@ -194,7 +198,50 @@ CREATE TABLE whitelabel_configs (
 );
 ```
 
+#### platform_settings
+```sql
+CREATE TABLE platform_settings (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  platform_subscription_price INTEGER,
+  platform_subscription_currency VARCHAR(10) DEFAULT 'USD',
+  platform_billing_interval VARCHAR(50) DEFAULT 'month',
+  platform_trial_days INTEGER DEFAULT 14,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+**Note:** This table stores platform-wide settings that can only be managed by the Platform Owner.
+
 ## Usage Guide
+
+### For Platform Owner
+
+The first user to register on the platform is automatically assigned the Platform Owner role.
+
+1. **Access Platform Owner Dashboard**
+   - Navigate to `/dashboard/platform-owner`
+   - View platform-wide statistics
+   - Monitor all SaaS creators
+
+2. **Manage Platform Settings**
+   - Go to `/dashboard/platform-owner/settings`
+   - Set subscription prices for the platform
+   - Configure billing intervals and trial periods
+   - Update platform-wide configurations
+
+3. **Manage SaaS Creators**
+   - Access `/dashboard/platform-owner/creators`
+   - View all registered SaaS creators
+   - Monitor their onboarding status
+   - Update creator subscription status
+   - Track Stripe connection status
+
+4. **Platform Owner Capabilities**
+   - All capabilities of a SaaS Creator (create products, manage pricing, etc.)
+   - Exclusive access to platform-wide settings
+   - Ability to view and manage all creators on the platform
+   - Access to platform-wide analytics and statistics
 
 ### For SaaS Creators
 
@@ -276,6 +323,17 @@ CREATE TABLE whitelabel_configs (
 - `GET /api/stripe/callback` - OAuth callback
 - `POST /api/stripe/disconnect` - Disconnect account
 - `POST /api/stripe/webhook` - Webhook handler
+
+### Platform Owner Endpoints
+
+**Note:** All endpoints in this section require Platform Owner role.
+
+- `GET /api/platform/settings` - Get platform settings
+- `PATCH /api/platform/settings` - Update platform settings
+- `GET /api/platform/creators` - Get all SaaS creators (with pagination and filtering)
+- `GET /api/platform/creators/:creatorId` - Get specific creator details
+- `PATCH /api/platform/creators/:creatorId` - Update creator status
+- `GET /api/platform/stats` - Get platform-wide statistics
 
 ## Development
 
