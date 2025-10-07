@@ -1,6 +1,7 @@
 import { Router, type Router as ExpressRouter } from 'express';
 import { signInSchema, signUpSchema } from '@saas-template/schema';
 import { validateRequest } from '../middleware/validate-request';
+import { supabase } from '../utils/supabase';
 
 const router: ExpressRouter = Router();
 
@@ -9,18 +10,26 @@ router.post('/signin', validateRequest(signInSchema), async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // TODO: Implement actual authentication logic
-    // For now, just return a mock response
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      return res.status(401).json({ error: error.message });
+    }
+
     res.json({
       message: 'Sign in successful',
       user: {
-        id: '1',
-        email,
-        created_at: new Date().toISOString(),
+        id: data.user.id,
+        email: data.user.email,
+        created_at: data.user.created_at,
       },
-      token: 'mock-jwt-token',
+      session: data.session,
     });
   } catch (error) {
+    console.error('Sign in error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -30,18 +39,26 @@ router.post('/signup', validateRequest(signUpSchema), async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // TODO: Implement actual user creation logic
-    // For now, just return a mock response
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
     res.json({
       message: 'User created successfully',
       user: {
-        id: '1',
-        email,
-        created_at: new Date().toISOString(),
+        id: data.user?.id,
+        email: data.user?.email,
+        created_at: data.user?.created_at,
       },
-      token: 'mock-jwt-token',
+      session: data.session,
     });
   } catch (error) {
+    console.error('Sign up error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -49,9 +66,21 @@ router.post('/signup', validateRequest(signUpSchema), async (req, res) => {
 // POST /api/auth/signout
 router.post('/signout', async (req, res) => {
   try {
-    // TODO: Implement actual signout logic
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.substring(7);
+    const { error } = await supabase.auth.admin.signOut(token);
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
     res.json({ message: 'Sign out successful' });
   } catch (error) {
+    console.error('Sign out error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

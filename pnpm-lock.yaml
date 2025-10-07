@@ -23,6 +23,9 @@ importers:
       '@saas-template/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@supabase/supabase-js':
+        specifier: ^2.58.0
+        version: 2.58.0
       cors:
         specifier: ^2.8.5
         version: 2.8.5

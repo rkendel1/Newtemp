@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { errorHandler } from './middleware/error-handler';
 import { notFoundHandler } from './middleware/not-found-handler';
+import { attachUserInfo } from './middleware/role-check';
 import { authRoutes } from './groups/auth';
 import { userRoutes } from './groups/user';
 import { subscriptionRoutes } from './groups/subscription';
@@ -21,6 +22,9 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Attach user info from JWT to all requests
+app.use(attachUserInfo);
 
 // Routes
 app.use('/api/auth', authRoutes);
