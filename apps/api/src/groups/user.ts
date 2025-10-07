@@ -1,21 +1,35 @@
 import { Router, type Router as ExpressRouter } from 'express';
+import { supabase } from '../utils/supabase';
+import { requireCreator } from '../middleware/role-check';
 
 const router: ExpressRouter = Router();
+
+// All routes require authentication
+router.use(requireCreator);
 
 // GET /api/users/profile
 router.get('/profile', async (req, res) => {
   try {
-    // TODO: Implement actual user profile retrieval
-    // For now, just return a mock response
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { data: user, error } = await supabase.auth.admin.getUserById(req.user.id);
+
+    if (error || !user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
     res.json({
       user: {
-        id: '1',
-        email: 'user@example.com',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        id: user.user.id,
+        email: user.user.email,
+        created_at: user.user.created_at,
+        updated_at: user.user.updated_at,
       },
     });
   } catch (error) {
+    console.error('Error fetching user profile:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -23,19 +37,31 @@ router.get('/profile', async (req, res) => {
 // PUT /api/users/profile
 router.put('/profile', async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     const { email } = req.body;
-    
-    // TODO: Implement actual user profile update
-    // For now, just return a mock response
+
+    const { data, error } = await supabase.auth.admin.updateUserById(
+      req.user.id,
+      { email }
+    );
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
     res.json({
       message: 'Profile updated successfully',
       user: {
-        id: '1',
-        email: email || 'user@example.com',
-        updated_at: new Date().toISOString(),
+        id: data.user.id,
+        email: data.user.email,
+        updated_at: data.user.updated_at,
       },
     });
   } catch (error) {
+    console.error('Error updating user profile:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

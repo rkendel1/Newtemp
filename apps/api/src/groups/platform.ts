@@ -2,6 +2,7 @@ import { Router, type Router as ExpressRouter } from 'express';
 import { updatePlatformSettingsSchema } from '@saas-template/schema';
 import { validateRequest } from '../middleware/validate-request';
 import { requirePlatformOwner } from '../middleware/role-check';
+import { supabase } from '../utils/supabase';
 
 const router: ExpressRouter = Router();
 
@@ -11,17 +12,28 @@ router.use(requirePlatformOwner);
 // GET /api/platform/settings - Get platform-wide settings
 router.get('/settings', async (req, res) => {
   try {
-    // TODO: Implement actual database query
-    res.json({
-      id: '1',
-      platform_subscription_price: 2900, // $29 in cents
-      platform_subscription_currency: 'USD',
-      platform_billing_interval: 'month',
-      platform_trial_days: 14,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
+    const { data: settings, error } = await supabase
+      .from('platform_settings')
+      .select('*')
+      .limit(1)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // No settings yet, return defaults
+        return res.json({
+          platform_subscription_price: 2900,
+          platform_subscription_currency: 'USD',
+          platform_billing_interval: 'month',
+          platform_trial_days: 14,
+        });
+      }
+      throw error;
+    }
+
+    res.json(settings);
   } catch (error) {
+    console.error('Error fetching platform settings:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -31,16 +43,47 @@ router.patch('/settings', validateRequest(updatePlatformSettingsSchema), async (
   try {
     const updates = req.body;
     
-    // TODO: Implement actual database update
-    res.json({
-      id: '1',
-      platform_subscription_price: updates.platform_subscription_price || 2900,
-      platform_subscription_currency: updates.platform_subscription_currency || 'USD',
-      platform_billing_interval: updates.platform_billing_interval || 'month',
-      platform_trial_days: updates.platform_trial_days !== undefined ? updates.platform_trial_days : 14,
-      updated_at: new Date().toISOString(),
-    });
+    // Check if settings exist
+    const { data: existing, error: fetchError } = await supabase
+      .from('platform_settings')
+      .select('id')
+      .limit(1)
+      .single();
+
+    let settings;
+    if (fetchError && fetchError.code === 'PGRST116') {
+      // Create new settings
+      const { data, error } = await supabase
+        .from('platform_settings')
+        .insert({
+          ...updates,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      settings = data;
+    } else if (fetchError) {
+      throw fetchError;
+    } else {
+      // Update existing settings
+      const { data, error } = await supabase
+        .from('platform_settings')
+        .update({
+          ...updates,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', existing.id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      settings = data;
+    }
+
+    res.json(settings);
   } catch (error) {
+    console.error('Error updating platform settings:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -49,43 +92,39 @@ router.patch('/settings', validateRequest(updatePlatformSettingsSchema), async (
 router.get('/creators', async (req, res) => {
   try {
     const { page = 1, limit = 10, status } = req.query;
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+    const offset = (pageNum - 1) * limitNum;
     
-    // TODO: Implement actual database query with pagination and filtering
+    let query = supabase
+      .from('saas_creators')
+      .select('*', { count: 'exact' });
+
+    if (status) {
+      query = query.eq('subscription_status', status);
+    }
+
+    const { data: creators, error, count } = await query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    if (error) {
+      throw error;
+    }
+
+    const totalPages = count ? Math.ceil(count / limitNum) : 0;
+
     res.json({
-      creators: [
-        {
-          id: '1',
-          user_id: '2',
-          company_name: 'Example SaaS Inc',
-          product_url: 'https://example.com',
-          stripe_account_id: 'acct_123',
-          onboarding_completed: true,
-          subscription_status: 'active',
-          role: 'saas_creator',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-        {
-          id: '2',
-          user_id: '3',
-          company_name: 'Another SaaS Co',
-          product_url: 'https://another-saas.com',
-          stripe_account_id: null,
-          onboarding_completed: false,
-          subscription_status: 'trial',
-          role: 'saas_creator',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-      ],
+      creators: creators || [],
       pagination: {
-        page: Number(page),
-        limit: Number(limit),
-        total: 2,
-        totalPages: 1,
+        page: pageNum,
+        limit: limitNum,
+        total: count || 0,
+        totalPages,
       },
     });
   } catch (error) {
+    console.error('Error fetching creators:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -95,22 +134,30 @@ router.get('/creators/:creatorId', async (req, res) => {
   try {
     const { creatorId } = req.params;
     
-    // TODO: Implement actual database query
-    res.json({
-      id: creatorId,
-      user_id: '2',
-      company_name: 'Example SaaS Inc',
-      product_url: 'https://example.com',
-      stripe_account_id: 'acct_123',
-      stripe_access_token: '***', // Redacted for security
-      stripe_refresh_token: '***', // Redacted for security
-      onboarding_completed: true,
-      subscription_status: 'active',
-      role: 'saas_creator',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
+    const { data: creator, error } = await supabase
+      .from('saas_creators')
+      .select('*')
+      .eq('id', creatorId)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return res.status(404).json({ error: 'Creator not found' });
+      }
+      throw error;
+    }
+
+    // Redact sensitive information
+    if (creator.stripe_access_token) {
+      creator.stripe_access_token = '***';
+    }
+    if (creator.stripe_refresh_token) {
+      creator.stripe_refresh_token = '***';
+    }
+
+    res.json(creator);
   } catch (error) {
+    console.error('Error fetching creator:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -121,15 +168,30 @@ router.patch('/creators/:creatorId', async (req, res) => {
     const { creatorId } = req.params;
     const { subscription_status } = req.body;
     
-    // TODO: Validate input
-    // TODO: Implement actual database update
-    
-    res.json({
-      id: creatorId,
-      subscription_status: subscription_status || 'active',
-      updated_at: new Date().toISOString(),
-    });
+    if (!subscription_status) {
+      return res.status(400).json({ error: 'subscription_status is required' });
+    }
+
+    const { data: creator, error } = await supabase
+      .from('saas_creators')
+      .update({
+        subscription_status,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', creatorId)
+      .select()
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return res.status(404).json({ error: 'Creator not found' });
+      }
+      throw error;
+    }
+
+    res.json(creator);
   } catch (error) {
+    console.error('Error updating creator:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -137,17 +199,43 @@ router.patch('/creators/:creatorId', async (req, res) => {
 // GET /api/platform/stats - Get platform-wide statistics
 router.get('/stats', async (req, res) => {
   try {
-    // TODO: Implement actual database queries for statistics
+    // Get total creators
+    const { count: totalCreators } = await supabase
+      .from('saas_creators')
+      .select('*', { count: 'exact', head: true });
+
+    // Get active creators
+    const { count: activeCreators } = await supabase
+      .from('saas_creators')
+      .select('*', { count: 'exact', head: true })
+      .eq('subscription_status', 'active');
+
+    // Get trial creators
+    const { count: trialCreators } = await supabase
+      .from('saas_creators')
+      .select('*', { count: 'exact', head: true })
+      .eq('subscription_status', 'trial');
+
+    // Get total products
+    const { count: totalProducts } = await supabase
+      .from('creator_products')
+      .select('*', { count: 'exact', head: true });
+
+    // Get total subscribers
+    const { count: totalSubscribers } = await supabase
+      .from('subscribers')
+      .select('*', { count: 'exact', head: true });
+
     res.json({
-      total_creators: 2,
-      active_creators: 1,
-      trial_creators: 1,
-      total_products: 5,
-      total_subscribers: 150,
-      monthly_revenue: 45000, // in cents
+      total_creators: totalCreators || 0,
+      active_creators: activeCreators || 0,
+      trial_creators: trialCreators || 0,
+      total_products: totalProducts || 0,
+      total_subscribers: totalSubscribers || 0,
       created_at: new Date().toISOString(),
     });
   } catch (error) {
+    console.error('Error fetching platform stats:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

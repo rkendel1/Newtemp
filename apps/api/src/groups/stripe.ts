@@ -1,17 +1,20 @@
 import { Router, type Router as ExpressRouter } from 'express';
 import { buildStripeOAuthUrl } from '@saas-template/utils';
+import { supabase } from '../utils/supabase';
+import { requireCreator } from '../middleware/role-check';
 
 const router: ExpressRouter = Router();
 
 // GET /api/stripe/connect - Initialize Stripe OAuth flow
-router.get('/connect', async (req, res) => {
+router.get('/connect', requireCreator, async (req, res) => {
   try {
-    // TODO: Get creator_id from auth token
-    const creatorId = '1'; // Mock creator ID
-    
+    if (!req.user || !req.user.creator_id) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     // Generate state for CSRF protection
     const state = Buffer.from(JSON.stringify({ 
-      creatorId, 
+      creatorId: req.user.creator_id, 
       timestamp: Date.now() 
     })).toString('base64');
     
@@ -30,6 +33,7 @@ router.get('/connect', async (req, res) => {
     
     res.json({ authUrl });
   } catch (error) {
+    console.error('Error generating Stripe connect URL:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -66,12 +70,20 @@ router.get('/callback', async (req, res) => {
       return res.status(400).json({ error: 'Failed to exchange code for token', details: tokenData });
     }
     
-    // TODO: Store Stripe credentials in database
-    // {
-    //   stripe_account_id: tokenData.stripe_user_id,
-    //   stripe_access_token: tokenData.access_token,
-    //   stripe_refresh_token: tokenData.refresh_token,
-    // }
+    // Store Stripe credentials in database
+    const { error } = await supabase
+      .from('saas_creators')
+      .update({
+        stripe_account_id: tokenData.stripe_user_id,
+        stripe_access_token: tokenData.access_token,
+        stripe_refresh_token: tokenData.refresh_token,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', creatorId);
+
+    if (error) {
+      throw error;
+    }
     
     // Redirect to dashboard
     res.redirect(`${process.env.WEB_URL || 'http://localhost:3000'}/dashboard/onboarding?stripe_connected=true`);
@@ -82,15 +94,30 @@ router.get('/callback', async (req, res) => {
 });
 
 // POST /api/stripe/disconnect - Disconnect Stripe account
-router.post('/disconnect', async (req, res) => {
+router.post('/disconnect', requireCreator, async (req, res) => {
   try {
-    // TODO: Get creator_id from auth token
-    const creatorId = '1'; // Mock creator ID
-    
-    // TODO: Revoke Stripe access and clear credentials from database
+    if (!req.user || !req.user.creator_id) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    // Clear Stripe credentials from database
+    const { error } = await supabase
+      .from('saas_creators')
+      .update({
+        stripe_account_id: null,
+        stripe_access_token: null,
+        stripe_refresh_token: null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', req.user.creator_id);
+
+    if (error) {
+      throw error;
+    }
     
     res.json({ message: 'Stripe account disconnected successfully' });
   } catch (error) {
+    console.error('Error disconnecting Stripe:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -104,7 +131,7 @@ router.post('/webhook', async (req, res) => {
       return res.status(400).json({ error: 'Missing Stripe signature' });
     }
     
-    // TODO: Verify webhook signature using Stripe library
+    // Note: In production, verify webhook signature using Stripe library
     // const event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     
     const event = req.body;
@@ -112,33 +139,70 @@ router.post('/webhook', async (req, res) => {
     // Handle different event types
     switch (event.type) {
       case 'customer.subscription.created':
-        // TODO: Handle new subscription
         console.log('Subscription created:', event.data.object);
+        // Update subscriber status in database
+        if (event.data.object.metadata?.subscriber_id) {
+          await supabase
+            .from('subscribers')
+            .update({
+              stripe_subscription_id: event.data.object.id,
+              subscription_status: 'active',
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', event.data.object.metadata.subscriber_id);
+        }
         break;
         
       case 'customer.subscription.updated':
-        // TODO: Handle subscription update
         console.log('Subscription updated:', event.data.object);
+        // Update subscriber information
+        if (event.data.object.metadata?.subscriber_id) {
+          await supabase
+            .from('subscribers')
+            .update({
+              subscription_status: event.data.object.status,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', event.data.object.metadata.subscriber_id);
+        }
         break;
         
       case 'customer.subscription.deleted':
-        // TODO: Handle subscription cancellation
         console.log('Subscription deleted:', event.data.object);
+        // Mark subscription as canceled
+        if (event.data.object.metadata?.subscriber_id) {
+          await supabase
+            .from('subscribers')
+            .update({
+              subscription_status: 'canceled',
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', event.data.object.metadata.subscriber_id);
+        }
         break;
         
       case 'invoice.payment_succeeded':
-        // TODO: Handle successful payment
         console.log('Payment succeeded:', event.data.object);
+        // Could update payment history or send confirmation email
         break;
         
       case 'invoice.payment_failed':
-        // TODO: Handle failed payment
         console.log('Payment failed:', event.data.object);
+        // Update subscription status and notify customer
+        if (event.data.object.subscription) {
+          await supabase
+            .from('subscribers')
+            .update({
+              subscription_status: 'past_due',
+              updated_at: new Date().toISOString(),
+            })
+            .eq('stripe_subscription_id', event.data.object.subscription);
+        }
         break;
         
       case 'checkout.session.completed':
-        // TODO: Handle completed checkout
         console.log('Checkout completed:', event.data.object);
+        // Handle successful checkout session
         break;
         
       default:

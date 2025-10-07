@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserRole } from '@saas-template/schema';
+import { supabase } from '../utils/supabase';
 
 // Extend Express Request to include user information
 declare global {
@@ -18,8 +19,6 @@ declare global {
  * Middleware to check if user has platform owner role
  */
 export const requirePlatformOwner = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: Get user role from database based on auth token
-  // For now, using mock data
   const userRole = req.user?.role || 'saas_creator';
   
   if (userRole !== 'platform_owner') {
@@ -36,8 +35,12 @@ export const requirePlatformOwner = (req: Request, res: Response, next: NextFunc
  * Middleware to check if user has at least SaaS creator role
  */
 export const requireCreator = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: Implement actual auth check
-  // For now, allowing all requests
+  if (!req.user) {
+    return res.status(401).json({ 
+      error: 'Unauthorized', 
+      message: 'Authentication required' 
+    });
+  }
   next();
 };
 
@@ -47,18 +50,45 @@ export const requireCreator = (req: Request, res: Response, next: NextFunction) 
  */
 export const attachUserInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // TODO: Get user_id from auth token (e.g., JWT)
-    // TODO: Query database to get user's creator profile and role
+    // Extract JWT token from Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return next(); // Continue without user context
+    }
+
+    const token = authHeader.substring(7);
     
-    // Mock implementation - replace with actual database query
-    req.user = {
-      id: '1',
-      role: 'saas_creator', // This should come from database
-      creator_id: '1',
-    };
+    // Verify token with Supabase
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    
+    if (authError || !user) {
+      return next(); // Continue without user context
+    }
+
+    // Query database to get user's creator profile and role
+    const { data: creator, error: dbError } = await supabase
+      .from('saas_creators')
+      .select('id, role')
+      .eq('user_id', user.id)
+      .single();
+
+    if (dbError || !creator) {
+      // User authenticated but no creator profile yet
+      req.user = {
+        id: user.id,
+        role: 'saas_creator',
+      };
+    } else {
+      req.user = {
+        id: user.id,
+        role: creator.role as UserRole,
+        creator_id: creator.id,
+      };
+    }
     
     next();
   } catch (error) {
-    res.status(500).json({ error: 'Error retrieving user information' });
+    console.error('Error attaching user info:', error);
+    next(); // Continue without user context
   }
 };
