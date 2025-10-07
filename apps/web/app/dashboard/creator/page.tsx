@@ -82,8 +82,8 @@ export default function CreatorDashboardPage() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="hover:border-primary transition-colors cursor-pointer" asChild>
-          <Link href="/dashboard/creator/products">
+        <Link href="/dashboard/creator/products">
+          <Card className="hover:border-primary transition-colors cursor-pointer">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Package size={20} />
@@ -93,11 +93,11 @@ export default function CreatorDashboardPage() {
                 Create and manage your SaaS products and pricing tiers
               </CardDescription>
             </CardHeader>
-          </Link>
-        </Card>
+          </Card>
+        </Link>
 
-        <Card className="hover:border-primary transition-colors cursor-pointer" asChild>
-          <Link href="/dashboard/creator/subscribers">
+        <Link href="/dashboard/creator/subscribers">
+          <Card className="hover:border-primary transition-colors cursor-pointer">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users size={20} />
@@ -107,11 +107,11 @@ export default function CreatorDashboardPage() {
                 Monitor and manage your customer subscriptions
               </CardDescription>
             </CardHeader>
-          </Link>
-        </Card>
+          </Card>
+        </Link>
 
-        <Card className="hover:border-primary transition-colors cursor-pointer" asChild>
-          <Link href="/dashboard/creator/settings">
+        <Link href="/dashboard/creator/settings">
+          <Card className="hover:border-primary transition-colors cursor-pointer">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Settings size={20} />
@@ -121,8 +121,8 @@ export default function CreatorDashboardPage() {
                 Configure white-label settings and integrations
               </CardDescription>
             </CardHeader>
-          </Link>
-        </Card>
+          </Card>
+        </Link>
       </div>
 
       {/* Getting Started Guide */}

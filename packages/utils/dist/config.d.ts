@@ -1,13 +1,13 @@
 export declare const APP_CONFIG: {
-    siteUrl: any;
+    siteUrl: string;
     catApi: {
-        baseUrl: any;
-        apiKey: any;
+        baseUrl: string;
+        apiKey: string | undefined;
     };
     externalLinks: {
-        youtubeDemo: any;
-        discord: any;
-        github: any;
+        youtubeDemo: string;
+        discord: string;
+        github: string;
         docs: string;
         updateDashboard: string;
     };

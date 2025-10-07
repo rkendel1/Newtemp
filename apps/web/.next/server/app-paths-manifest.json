@@ -1,4 +1,20 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/auth/callback/route": "app/(auth)/auth/callback/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/dashboard/creator/page": "app/dashboard/creator/page.js",
+  "/dashboard/creator/products/page": "app/dashboard/creator/products/page.js",
+  "/dashboard/creator/subscribers/page": "app/dashboard/creator/subscribers/page.js",
+  "/dashboard/onboarding/page": "app/dashboard/onboarding/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/paid-content/page": "app/dashboard/paid-content/page.js",
+  "/dashboard/pricing/page": "app/dashboard/pricing/page.js",
+  "/dashboard/subscription/page": "app/dashboard/subscription/page.js",
   "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/portal/[productId]/page": "app/portal/[productId]/page.js",
+  "/(auth)/email-confirmation/page": "app/(auth)/email-confirmation/page.js",
+  "/(auth)/reset-password/confirm/page": "app/(auth)/reset-password/confirm/page.js",
+  "/(auth)/reset-password/page": "app/(auth)/reset-password/page.js",
+  "/(auth)/sign-in/page": "app/(auth)/sign-in/page.js",
+  "/(auth)/sign-up/page": "app/(auth)/sign-up/page.js"
 }

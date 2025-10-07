@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFullUrl = exports.APP_CONFIG = void 0;
 // Application URLs and endpoints
-exports.APP_CONFIG = {
+export const APP_CONFIG = {
     // Site URLs
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     // API URLs
@@ -34,9 +31,8 @@ exports.APP_CONFIG = {
     },
 };
 // Helper function to get full URLs
-var getFullUrl = function (path) {
-    var baseUrl = exports.APP_CONFIG.siteUrl.replace(/\/+$/, ''); // Remove trailing slashes
-    var cleanPath = path.replace(/^\/+/, ''); // Remove leading slashes
-    return "".concat(baseUrl, "/").concat(cleanPath);
+export const getFullUrl = (path) => {
+    const baseUrl = APP_CONFIG.siteUrl.replace(/\/+$/, ''); // Remove trailing slashes
+    const cleanPath = path.replace(/^\/+/, ''); // Remove leading slashes
+    return `${baseUrl}/${cleanPath}`;
 };
-exports.getFullUrl = getFullUrl;
